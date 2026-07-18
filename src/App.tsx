@@ -12,6 +12,8 @@ const navItems = [
   ['Event info', '#details'],
 ]
 
+const assetUrl = (filename: string) => `${import.meta.env.BASE_URL}${filename}`
+
 function App() {
   const [menuOpen, setMenuOpen] = useState(false)
 
@@ -30,7 +32,7 @@ function App() {
       <a className="skip-link" href="#main">Skip to content</a>
       <header className="site-header">
         <a className="brand" href="#top" aria-label="Moksha Base — home">
-          <img src="/moksha-logo.png" alt="" />
+          <img src={assetUrl('moksha-logo.png')} alt="" width="500" height="472" decoding="async" />
           <span>Moksha Base</span>
         </a>
         <button
@@ -55,7 +57,7 @@ function App() {
           <div className="hero__poster" aria-hidden="true" />
           <div className="hero__content">
             <p className="hero__presenter">Moksha Base presents</p>
-            <img className="hero__title" src="/hope-title.png" alt="Hope" />
+            <img className="hero__title" src={assetUrl('hope-title.png')} alt="Hope" width="871" height="262" fetchPriority="high" />
             <p className="hero__kicker">Rhythms of Hope</p>
             <h1>{event.maoriName}</h1>
             <p className="hero__tagline">{event.tagline}</p>
@@ -157,7 +159,7 @@ function App() {
 
       <footer className="site-footer">
         <div className="footer__brand">
-          <img src="/moksha-logo.png" alt="Moksha Base" />
+          <img src={assetUrl('moksha-logo.png')} alt="Moksha Base" width="500" height="472" loading="lazy" decoding="async" />
           <p>Bringing people together through live music, cultural events and stories that strengthen connection.</p>
         </div>
         <div>
