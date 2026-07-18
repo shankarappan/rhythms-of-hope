@@ -203,7 +203,7 @@ h1, h2, h3, p { margin-top: 0; }
   .hero__status { align-items: flex-start; flex-direction: column; gap: 12px; }
   .hero__side-copy { display: none; }
   .scroll-cue { display: none; }
-  .statement { min-height: 150px; flex-direction: column; gap: 12px; }
+  .statement { min-height: 150px; margin-inline: auto; flex-direction: column; gap: 12px; }
   .statement p { font-size: 24px; }
   .section { padding: 88px 0; }
   .section-heading h2, .collaborate h2 { font-size: 42px; }
