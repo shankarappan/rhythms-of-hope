@@ -46,7 +46,7 @@ h1, h2, h3, p { margin-top: 0; }
 .hero__aurora { position: absolute; z-index: -2; inset: -20%; background: radial-gradient(circle at 62% 53%, rgba(255,182,0,.22), transparent 25%), radial-gradient(circle at 78% 50%, rgba(49,167,141,.22), transparent 28%), radial-gradient(circle at 55% 60%, rgba(255,75,24,.17), transparent 30%); filter: blur(40px); }
 .hero__content { width: var(--container); margin: 0 auto; position: relative; z-index: 2; }
 .hero__presenter { margin: 0 0 22px; font: 600 11px/1 var(--display); text-transform: uppercase; letter-spacing: .42em; color: #c3c0ba; }
-.hero__title { width: min(590px, 68vw); display: block; margin-left: -12px; filter: drop-shadow(0 16px 40px rgba(0,0,0,.48)); }
+.hero__title { width: min(590px, 68vw); height: auto; display: block; margin-left: -12px; filter: drop-shadow(0 16px 40px rgba(0,0,0,.48)); }
 .hero__kicker { margin: 12px 0 0; font: 700 clamp(17px, 2vw, 25px)/1 var(--display); letter-spacing: .32em; text-transform: uppercase; background: linear-gradient(90deg, var(--ember), var(--gold), var(--green)); -webkit-background-clip: text; background-clip: text; color: transparent; }
 .hero h1 { margin: 26px 0 4px; font: 500 clamp(19px, 2.3vw, 31px)/1.25 var(--display); }
 .hero__tagline { margin: 0 0 22px; color: #c7c4be; font: 500 14px/1 var(--display); letter-spacing: .27em; text-transform: uppercase; }
