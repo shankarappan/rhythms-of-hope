@@ -1,0 +1,15 @@
+node_modules/
+dist/
+.DS_Store
+*.log
+*.tsbuildinfo
+vite.config.js
+vite.config.d.ts
+
+# Internal planning/source materials are not part of the public website repository.
+AGENTS.md
+RHYTHMS OF HOPE.docx
+HOPE Poster.png
+Hope Show Title.png
+Moksha base logo 3.png
+blood-cancer-nz-white-text.png
