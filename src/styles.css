@@ -101,6 +101,11 @@ h1, h2, h3, p { margin-top: 0; }
 .experience-card--teal .experience-card__top, .experience-card--teal .experience-card__eyebrow { color: var(--teal); }
 .experience-card--green .experience-card__top, .experience-card--green .experience-card__eyebrow { color: var(--green); }
 
+@media (min-width: 621px) {
+  .experience-card h3 { min-height: 2.12em; }
+  .experience-card > p:last-child { min-height: 8em; }
+}
+
 .interlude { position: relative; min-height: 780px; display: grid; place-items: center; overflow: hidden; isolation: isolate; }
 .interlude__image { position: absolute; inset: 0; z-index: -3; background: url('/hope-poster.png') center 67% / cover; filter: saturate(1.05); transform: scale(1.02); }
 .interlude__veil { position: absolute; inset: 0; z-index: -2; background: linear-gradient(90deg, rgba(5,5,5,.92) 0%, rgba(5,5,5,.44) 55%, rgba(5,5,5,.72) 100%), linear-gradient(0deg, #050505 0%, transparent 22%, transparent 78%, #050505 100%); }
