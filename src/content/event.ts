@@ -16,6 +16,7 @@ export const event = {
   contactName: 'Abhishek Raj',
   contactRole: 'Band Manager — Moksha Base',
   contactEmail: 'info@mokshabase.com',
+  donationUrl: 'https://donate.stripe.com/00w6oH2Ff7Pz9hd65rfjG04',
 }
 
 export const experiences: Experience[] = [
@@ -58,6 +59,6 @@ export const values = [
 
 export const futureFeatures = {
   tickets: { enabled: false, label: 'Tickets' },
-  donations: { enabled: false, label: 'Donations' },
+  donations: { enabled: true, label: 'Donations' },
   merchandise: { enabled: false, label: 'Merchandise' },
 }
