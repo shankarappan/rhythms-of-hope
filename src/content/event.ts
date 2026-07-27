@@ -6,6 +6,20 @@ export type Experience = {
   accent: 'ember' | 'gold' | 'teal' | 'green'
 }
 
+export type DonationProgram = {
+  id: 'moksha-base' | 'blood-cancer-nz'
+  number: string
+  eyebrow: string
+  title: string
+  description: string
+  recipient: string
+  provider: string
+  url: string
+  linkLabel: string
+  details: string[]
+  accent: 'gold' | 'green'
+}
+
 export const event = {
   name: 'Rhythms of Hope',
   maoriName: 'Te Hīkoi o te Tūmanako',
@@ -16,8 +30,42 @@ export const event = {
   contactName: 'Abhishek Raj',
   contactRole: 'Band Manager — Moksha Base',
   contactEmail: 'info@mokshabase.com',
-  donationUrl: 'https://donate.stripe.com/00w6oH2Ff7Pz9hd65rfjG04',
 }
+
+export const donationPrograms: DonationProgram[] = [
+  {
+    id: 'moksha-base',
+    number: '01',
+    eyebrow: 'Community programme',
+    title: 'Strengthen local cancer support',
+    description: 'Help Moksha Base create Rhythms of Hope, community events and meetups for people affected by cancer, and respond to immediate practical needs.',
+    recipient: 'Moksha Base',
+    provider: 'Stripe',
+    url: 'https://donate.stripe.com/00w6oH2Ff7Pz9hd65rfjG04',
+    linkLabel: 'Donate to Moksha Base',
+    details: [
+      'Choose any amount from NZ$10',
+      'Named or anonymous acknowledgement',
+    ],
+    accent: 'green',
+  },
+  {
+    id: 'blood-cancer-nz',
+    number: '02',
+    eyebrow: 'Blood cancer programme',
+    title: 'Support Blood Cancer New Zealand',
+    description: 'Give through the Hope community fundraising page supporting Blood Cancer New Zealand and its work for people and families affected by blood cancer.',
+    recipient: 'Blood Cancer New Zealand',
+    provider: 'Raisely',
+    url: 'https://lbc-community-fundraising.raiselysite.com/hope',
+    linkLabel: 'Donate to Blood Cancer NZ',
+    details: [
+      'Donation options shown on the campaign page',
+      'Receipts and donor details handled there',
+    ],
+    accent: 'gold',
+  },
+]
 
 export const experiences: Experience[] = [
   {

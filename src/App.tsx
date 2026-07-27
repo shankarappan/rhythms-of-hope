@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react'
+import { DonationChooser } from './components/DonationChooser'
 import { ExperienceCard } from './components/ExperienceCard'
 import { SectionHeading } from './components/SectionHeading'
 import { StatusPill } from './components/StatusPill'
-import { event, experiences, values } from './content/event'
+import { donationPrograms, event, experiences, values } from './content/event'
 import './styles.css'
 
 const navItems = [
@@ -48,7 +49,7 @@ function App() {
         </button>
         <nav id="site-nav" className={menuOpen ? 'site-nav is-open' : 'site-nav'} aria-label="Main navigation">
           {navItems.map(([label, href]) => <a key={href} href={href} onClick={() => setMenuOpen(false)}>{label}</a>)}
-          <a className="nav-cta" href={event.donationUrl} target="_blank" rel="noopener noreferrer">Donate</a>
+          <a className="nav-cta" href="#donate" onClick={() => setMenuOpen(false)}>Donate</a>
         </nav>
       </header>
 
@@ -133,25 +134,7 @@ function App() {
           <p className="medical-note" data-reveal><strong>A thoughtful foundation.</strong> Public-facing medical and awareness content will be developed with guidance from appropriate healthcare or cancer-support organisations.</p>
         </section>
 
-        <section className="donate section" id="donate">
-          <div className="donate__glow" aria-hidden="true" />
-          <div className="donate__content" data-reveal>
-            <p className="eyebrow">Hope in action</p>
-            <h2>Give what you can.<br /><span>Help hope travel further.</span></h2>
-            <p>Donations are received and administered by Moksha Base to support the cause of Rhythms of Hope and help meet immediate needs of people affected by cancer.</p>
-            <div className="donate__actions">
-              <a className="button button--donate" href={event.donationUrl} target="_blank" rel="noopener noreferrer">
-                Donate securely <span aria-hidden="true">↗</span>
-              </a>
-              <span>Secure checkout powered by Stripe</span>
-            </div>
-          </div>
-          <aside className="donate__details" data-reveal aria-label="Donation information">
-            <div><span>Minimum</span><strong>NZ$10</strong></div>
-            <div><span>Your choice</span><strong>Any amount above NZ$10</strong></div>
-            <p>Donors may ask to remain anonymous in acknowledgements. No tax-deductibility claim is made.</p>
-          </aside>
-        </section>
+        <DonationChooser programs={donationPrograms} />
 
         <section className="details section" id="details">
           <div className="details__intro" data-reveal>
