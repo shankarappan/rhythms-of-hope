@@ -37,20 +37,23 @@ function App() {
           <img src={assetUrl('moksha-logo.png')} alt="" width="500" height="472" decoding="async" />
           <span>Moksha Base</span>
         </a>
-        <button
-          className="menu-button"
-          type="button"
-          aria-expanded={menuOpen}
-          aria-controls="site-nav"
-          onClick={() => setMenuOpen(open => !open)}
-        >
-          <span className="sr-only">Toggle menu</span>
-          <i /><i />
-        </button>
         <nav id="site-nav" className={menuOpen ? 'site-nav is-open' : 'site-nav'} aria-label="Main navigation">
           {navItems.map(([label, href]) => <a key={href} href={href} onClick={() => setMenuOpen(false)}>{label}</a>)}
           <a className="nav-cta" href="#donate" onClick={() => setMenuOpen(false)}>Donate</a>
         </nav>
+        <div className="header-mobile-actions">
+          <a className="nav-cta header-donate-mobile" href="#donate">Donate</a>
+          <button
+            className="menu-button"
+            type="button"
+            aria-expanded={menuOpen}
+            aria-controls="site-nav"
+            onClick={() => setMenuOpen(open => !open)}
+          >
+            <span className="sr-only">Toggle menu</span>
+            <i /><i />
+          </button>
+        </div>
       </header>
 
       <main id="main">
