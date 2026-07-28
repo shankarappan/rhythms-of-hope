@@ -42,7 +42,7 @@ export const donationPrograms: DonationProgram[] = [
     recipient: 'Moksha Base',
     provider: 'Stripe',
     url: 'https://donate.stripe.com/00w6oH2Ff7Pz9hd65rfjG04',
-    linkLabel: 'Donate to Moksha Base',
+    linkLabel: 'Donate to Event Cause',
     details: [
       'Choose any amount from NZ$10',
       'Named or anonymous acknowledgement',
