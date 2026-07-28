@@ -89,7 +89,7 @@ h1, h2, h3, p { margin-top: 0; }
   }
 }
 
-.statement { width: var(--container); min-height: 190px; display: flex; align-items: center; justify-content: center; gap: clamp(22px, 6vw, 86px); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); text-align: center; }
+.statement { width: var(--container); min-height: 190px; margin: 0 auto; display: flex; align-items: center; justify-content: center; gap: clamp(22px, 6vw, 86px); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); text-align: center; }
 .statement p { margin: 0; font: 700 clamp(20px, 3vw, 40px)/1 var(--display); letter-spacing: -.04em; text-transform: uppercase; }
 .text-gradient { background: linear-gradient(90deg, var(--gold), var(--green)); -webkit-background-clip: text; background-clip: text; color: transparent; }
 
