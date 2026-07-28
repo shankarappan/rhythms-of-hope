@@ -36,7 +36,7 @@ h1, h2, h3, p { margin-top: 0; }
 .site-nav { display: flex; align-items: center; gap: 34px; font: 500 13px/1 var(--body); }
 .site-nav > a:not(.nav-cta) { color: #d6d4cf; transition: color .2s; }
 .site-nav > a:hover, .site-nav > a:focus-visible { color: var(--white); }
-.nav-cta { padding: 13px 18px; border: 1px solid var(--ember); background: var(--ember); color: #fff; text-transform: uppercase; letter-spacing: .12em; font-size: 11px; transition: background .2s, border-color .2s, color .2s, transform .2s; }
+.nav-cta { padding: 13px 18px; border: 1px solid var(--ember); background: transparent; color: var(--ember); text-transform: uppercase; letter-spacing: .12em; font-size: 11px; transition: background .2s, border-color .2s, color .2s, transform .2s; }
 .nav-cta:hover, .nav-cta:focus-visible { transform: translateY(-2px); border-color: #ff6537; background: #ff6537; color: #fff; }
 .header-mobile-actions { display: none; }
 .menu-button { display: none; border: 0; background: transparent; }
