@@ -9,7 +9,7 @@
     "enabled": true
   },
   "vars": {
-    "TICKETING_ENABLED": "false"
+    "TICKETING_ENABLED": "true"
   },
   "secrets": {
     "required": [
