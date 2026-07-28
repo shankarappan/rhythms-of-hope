@@ -160,7 +160,6 @@ function App() {
             <div><dt>Venue</dt><dd>Te Whare Maui Event Centre <span>Hamilton</span></dd></div>
             <div><dt>Tickets</dt><dd>NZ$22 total <span>NZ$20 ticket + NZ$2 fee · no GST</span></dd></div>
             <div><dt>Audience</dt><dd>Open to the wider community</dd></div>
-            <div><dt>Capacity</dt><dd>350 admissions</dd></div>
           </dl>
         </section>
 

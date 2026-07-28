@@ -1,6 +1,6 @@
 "use client";
 
-import { FormEvent, useEffect, useMemo, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import { SectionHeading } from "./SectionHeading";
 
 type Availability = {
@@ -26,12 +26,6 @@ export function TicketCheckout() {
       .then(data => setAvailability(data as Availability | null))
       .catch(() => setAvailability(null));
   }, []);
-
-  const availabilityText = useMemo(() => {
-    if (!availability) return "Live availability will be confirmed at checkout.";
-    if (availability.remaining === 0) return "Sold out";
-    return `${availability.remaining} of 350 admissions currently remain`;
-  }, [availability]);
 
   const submit = async (event: FormEvent) => {
     event.preventDefault();
@@ -71,7 +65,6 @@ export function TicketCheckout() {
       <form className="ticket-checkout" onSubmit={submit} data-reveal>
         <div className="ticket-checkout__heading">
           <div><span>General admission</span><strong>NZ$22</strong><small>NZ$20 ticket + NZ$2 booking/processing fee</small></div>
-          <p>{availabilityText}</p>
         </div>
         <label className="ticket-field">
           <span>Number of tickets</span>
