@@ -1,0 +1,75 @@
+name: Build and deploy Rhythms of Hope
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  deployments: write
+
+concurrency:
+  group: production
+  cancel-in-progress: false
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm test
+      - run: npx tsc --noEmit
+      - run: npm run build
+
+  deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    needs: validate
+    environment:
+      name: production
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run build
+
+      - name: Apply ticket database migrations
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          command: d1 migrations apply rhythms-of-hope-tickets --remote --config wrangler.jsonc
+
+      - name: Deploy Worker
+        id: deploy
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          command: deploy --config dist/server/wrangler.json
+          secrets: |
+            STRIPE_SECRET_KEY
+            STRIPE_WEBHOOK_SECRET
+            STRIPE_COMPLIMENTARY_COUPON_ID
+            COMPLIMENTARY_CODE_HASH
+            RESEND_API_KEY
+            STATUS_PASSWORD
+            SESSION_SIGNING_SECRET
+        env:
+          STRIPE_SECRET_KEY: ${{ secrets.STRIPE_SECRET_KEY }}
+          STRIPE_WEBHOOK_SECRET: ${{ secrets.STRIPE_WEBHOOK_SECRET }}
+          STRIPE_COMPLIMENTARY_COUPON_ID: ${{ secrets.STRIPE_COMPLIMENTARY_COUPON_ID }}
+          COMPLIMENTARY_CODE_HASH: ${{ secrets.COMPLIMENTARY_CODE_HASH }}
+          RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
+          STATUS_PASSWORD: ${{ secrets.STATUS_PASSWORD }}
+          SESSION_SIGNING_SECRET: ${{ secrets.SESSION_SIGNING_SECRET }}

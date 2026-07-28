@@ -24,7 +24,25 @@ npm run build
 npm run lint
 ```
 
-The `main` branch deploys automatically to GitHub Pages.
+The `main` branch deploys automatically from GitHub Actions to Cloudflare
+Workers. Cloudflare D1 stores reservations, orders, tickets, QR check-ins and
+webhook idempotency records.
+
+The GitHub `production` environment requires these encrypted secrets:
+
+- `CLOUDFLARE_ACCOUNT_ID`
+- `CLOUDFLARE_API_TOKEN`
+- `STRIPE_SECRET_KEY`
+- `STRIPE_WEBHOOK_SECRET`
+- `STRIPE_COMPLIMENTARY_COUPON_ID`
+- `COMPLIMENTARY_CODE_HASH`
+- `RESEND_API_KEY`
+- `STATUS_PASSWORD`
+- `SESSION_SIGNING_SECRET`
+
+Ticket sales stay closed while `TICKETING_ENABLED` is `false` in
+`wrangler.jsonc`. Only change it after the live payment, webhook, ticket PDF,
+email and check-in flow has passed an end-to-end test.
 
 ## GoDaddy API administration
 

@@ -10,6 +10,8 @@
     "lint": "eslint .",
     "test": "node --test",
     "db:generate": "drizzle-kit generate",
+    "db:migrate:remote": "wrangler d1 migrations apply rhythms-of-hope-tickets --remote --config wrangler.jsonc",
+    "deploy": "npm run build && wrangler deploy --config dist/server/wrangler.json",
     "godaddy:check": "node scripts/godaddy-check.mjs"
   },
   "dependencies": {
