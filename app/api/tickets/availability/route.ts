@@ -7,8 +7,8 @@ export async function GET() {
   try {
     const availability = await getAvailability();
     return Response.json({
-      ...availability,
       salesOpen: getRuntimeEnv().TICKETING_ENABLED === "true",
+      soldOut: availability.remaining === 0,
     });
   } catch (error) {
     console.error("Ticket availability failed", error);
