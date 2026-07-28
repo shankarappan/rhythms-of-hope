@@ -36,11 +36,13 @@ export async function sendTicketEmail(order: TicketOrder, origin: string) {
     .join("");
   const buyerName = escapeHtml(order.buyerName);
   const orderId = escapeHtml(order.id);
+  const hopeTitleUrl = escapeHtml(new URL("/hope-title.png", origin).toString());
   const html = `
     <div style="margin:0;background:#090909;color:#f8f5ec;font-family:Arial,sans-serif;padding:32px 16px">
       <div style="max-width:640px;margin:auto;background:#111;border-top:5px solid #ffb600;padding:36px">
         <p style="color:#76e34d;letter-spacing:2px;font-size:11px;font-weight:700">MOKSHA BASE PRESENTS</p>
-        <h1 style="font-size:36px;margin:12px 0 4px;color:#ffb600">${EVENT_NAME}</h1>
+        <img src="${hopeTitleUrl}" alt="HOPE" width="360" style="display:block;width:100%;max-width:360px;height:auto;margin:18px 0 12px">
+        <p style="margin:0 0 5px;color:#ff6b2b;letter-spacing:2px;font-size:12px;font-weight:700">${EVENT_NAME.toUpperCase()}</p>
         <p style="margin:0 0 28px;color:#9fe981">${EVENT_SUBTITLE}</p>
         <p>Kia ora ${buyerName},</p>
         <p>Your ${isComplimentary ? "complimentary " : ""}booking is confirmed. Your QR-coded tickets are attached as a PDF.</p>

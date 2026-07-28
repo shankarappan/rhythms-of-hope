@@ -1,5 +1,6 @@
 import { PDFDocument, StandardFonts, rgb } from "pdf-lib";
 import QRCode from "qrcode";
+import hopeTitleDataUrl from "./assets/hope-title.png?inline";
 import {
   EVENT_DATE,
   EVENT_NAME,
@@ -21,8 +22,8 @@ function drawMaoriSubtitle(
   y: number,
 ) {
   const subtitle = "Te Hikoi o te Tumanako";
-  const size = 14;
-  const x = (595 - font.widthOfTextAtSize(subtitle, size)) / 2;
+  const size = 13;
+  const x = 44;
   const color = rgb(0.47, 0.89, 0.3);
   page.drawText(subtitle, { x, y, size, font, color });
   for (const prefix of ["Te H", "Te Hikoi o te T"]) {
@@ -37,70 +38,25 @@ function drawMaoriSubtitle(
   }
 }
 
-function drawTrackedText(
-  page: ReturnType<PDFDocument["addPage"]>,
-  text: string,
-  font: Awaited<ReturnType<PDFDocument["embedFont"]>>,
-  options: {
-    centerX: number;
-    y: number;
-    size: number;
-    tracking: number;
-    color: ReturnType<typeof rgb>;
-  },
-) {
-  const glyphWidth = [...text].reduce(
-    (total, character) => total + font.widthOfTextAtSize(character, options.size),
-    0,
-  );
-  const width = glyphWidth + Math.max(0, text.length - 1) * options.tracking;
-  let x = options.centerX - width / 2;
-  for (const character of text) {
-    page.drawText(character, {
-      x,
-      y: options.y,
-      size: options.size,
-      font,
-      color: options.color,
-    });
-    x += font.widthOfTextAtSize(character, options.size) + options.tracking;
-  }
-}
-
 export async function createTicketPdf(order: TicketOrder, origin: string) {
   const pdf = await PDFDocument.create();
   const regular = await pdf.embedFont(StandardFonts.Helvetica);
   const bold = await pdf.embedFont(StandardFonts.HelveticaBold);
-  const hopeTitle = await fetch(new URL("/hope-title.png", origin))
-    .then(async response => {
-      if (!response.ok) throw new Error("Ticket title artwork could not be loaded.");
-      return pdf.embedPng(await response.arrayBuffer());
-    })
-    .catch(() => null);
+  const hopeTitle = await pdf.embedPng(hopeTitleDataUrl);
   for (const ticket of order.tickets) {
     const page = pdf.addPage([595, 842]);
     page.drawRectangle({ x: 0, y: 0, width: 595, height: 842, color: rgb(0.02, 0.02, 0.02) });
     page.drawRectangle({ x: 0, y: 772, width: 595, height: 70, color: rgb(0.98, 0.3, 0.08) });
     page.drawText("MOKSHA BASE PRESENTS", { x: 44, y: 802, size: 10, font: bold, color: rgb(1, 1, 1) });
-    if (hopeTitle) {
-      page.drawImage(hopeTitle, { x: 44, y: 612, width: 507, height: 152.5 });
-    } else {
-      page.drawText("HOPE", { x: 175, y: 655, size: 64, font: bold, color: rgb(1, 0.72, 0) });
-    }
-    drawTrackedText(page, EVENT_NAME.toUpperCase(), bold, {
-      centerX: 297.5,
-      y: 586,
-      size: 11,
-      tracking: 2.2,
-      color: rgb(1, 0.42, 0.08),
-    });
-    drawMaoriSubtitle(page, regular, 560);
-    page.drawText("GENERAL ADMISSION", { x: 44, y: 516, size: 11, font: bold, color: rgb(0.75, 0.75, 0.72) });
-    page.drawText(EVENT_DATE, { x: 44, y: 484, size: 17, font: bold, color: rgb(1, 1, 1) });
-    page.drawText(EVENT_TIME, { x: 44, y: 457, size: 13, font: regular, color: rgb(0.82, 0.81, 0.78) });
-    page.drawText(EVENT_VENUE, { x: 44, y: 430, size: 13, font: regular, color: rgb(0.82, 0.81, 0.78) });
-    page.drawText(`Ticket ${ticket.number}`, { x: 44, y: 374, size: 22, font: bold, color: rgb(1, 1, 1) });
-    page.drawText(`Issued to ${pdfSafeText(order.buyerName)}`, { x: 44, y: 347, size: 12, font: regular, color: rgb(0.68, 0.68, 0.65) });
+    page.drawImage(hopeTitle, { x: 44, y: 648, width: 360, height: 108.3 });
+    page.drawText(EVENT_NAME.toUpperCase(), { x: 44, y: 620, size: 11, font: bold, color: rgb(1, 0.42, 0.08) });
+    drawMaoriSubtitle(page, regular, 594);
+    page.drawText("GENERAL ADMISSION", { x: 44, y: 548, size: 11, font: bold, color: rgb(0.75, 0.75, 0.72) });
+    page.drawText(EVENT_DATE, { x: 44, y: 516, size: 17, font: bold, color: rgb(1, 1, 1) });
+    page.drawText(EVENT_TIME, { x: 44, y: 489, size: 13, font: regular, color: rgb(0.82, 0.81, 0.78) });
+    page.drawText(EVENT_VENUE, { x: 44, y: 462, size: 13, font: regular, color: rgb(0.82, 0.81, 0.78) });
+    page.drawText(`Ticket ${ticket.number}`, { x: 44, y: 406, size: 22, font: bold, color: rgb(1, 1, 1) });
+    page.drawText(`Issued to ${pdfSafeText(order.buyerName)}`, { x: 44, y: 379, size: 12, font: regular, color: rgb(0.68, 0.68, 0.65) });
     const qrDataUrl = await QRCode.toDataURL(`${origin}/check-in?token=${encodeURIComponent(ticket.token)}`, {
       width: 560,
       margin: 1,
