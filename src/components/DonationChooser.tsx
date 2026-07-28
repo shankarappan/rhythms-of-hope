@@ -31,28 +31,39 @@ export function DonationChooser({ programs }: DonationChooserProps) {
             const isSelected = selection === program.id
 
             return (
-              <button
-                className={`donation-program donation-program--${program.accent}${isSelected ? ' is-selected' : ''}`}
-                type="button"
-                key={program.id}
-                aria-pressed={isSelected}
-                onClick={() => setSelection(program.id)}
-              >
-                <span className="donation-program__top">
-                  <span>{program.number}</span>
-                  <i aria-hidden="true" />
-                  <span>{program.eyebrow}</span>
-                </span>
-                <strong>{program.title}</strong>
-                <span className="donation-program__description">{program.description}</span>
-                <span className="donation-program__recipient">
-                  Donation received by <b>{program.recipient}</b>
-                </span>
-                <span className="donation-program__choose">
-                  {isSelected ? 'Selected' : 'Choose this programme'}
-                  <span aria-hidden="true">{isSelected ? '✓' : '→'}</span>
-                </span>
-              </button>
+              <div className={`donation-program-wrap donation-program-wrap--${program.accent}`} key={program.id}>
+                <button
+                  className={`donation-program donation-program--${program.accent}${isSelected ? ' is-selected' : ''}`}
+                  type="button"
+                  aria-pressed={isSelected}
+                  onClick={() => setSelection(program.id)}
+                >
+                  <span className="donation-program__top">
+                    <span>{program.number}</span>
+                    <i aria-hidden="true" />
+                    <span>{program.eyebrow}</span>
+                  </span>
+                  <strong>{program.title}</strong>
+                  <span className="donation-program__description">{program.description}</span>
+                  <span className="donation-program__recipient">
+                    Donation received by <b>{program.recipient}</b>
+                  </span>
+                  <span className="donation-program__choose">
+                    {isSelected ? 'Selected' : 'Choose this programme'}
+                    <span aria-hidden="true">{isSelected ? '✓' : '→'}</span>
+                  </span>
+                </button>
+                {isSelected && (
+                  <a
+                    className="donation-program__quick-action"
+                    href={program.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    {program.linkLabel} <ExternalArrow />
+                  </a>
+                )}
+              </div>
             )
           })}
         </div>
