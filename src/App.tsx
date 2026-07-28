@@ -1,8 +1,11 @@
+"use client";
+
 import { useEffect, useState } from 'react'
 import { DonationChooser } from './components/DonationChooser'
 import { ExperienceCard } from './components/ExperienceCard'
 import { SectionHeading } from './components/SectionHeading'
 import { StatusPill } from './components/StatusPill'
+import { TicketCheckout } from './components/TicketCheckout'
 import { donationPrograms, event, experiences, values } from './content/event'
 import './styles.css'
 
@@ -10,11 +13,12 @@ const navItems = [
   ['The story', '#story'],
   ['Experience', '#experience'],
   ['Purpose', '#purpose'],
+  ['Tickets', '#tickets'],
   ['Donate', '#donate'],
   ['Event info', '#details'],
 ]
 
-const assetUrl = (filename: string) => `${import.meta.env.BASE_URL}${filename}`
+const assetUrl = (filename: string) => `/${filename}`
 
 function App() {
   const [menuOpen, setMenuOpen] = useState(false)
@@ -39,9 +43,13 @@ function App() {
         </a>
         <nav id="site-nav" className={menuOpen ? 'site-nav is-open' : 'site-nav'} aria-label="Main navigation">
           {navItems.map(([label, href]) => <a key={href} href={href} onClick={() => setMenuOpen(false)}>{label}</a>)}
-          <a className="nav-cta" href="#donate" onClick={() => setMenuOpen(false)}>Donate</a>
+          <div className="nav-actions">
+            <a className="nav-cta nav-cta--ticket" href="#tickets" onClick={() => setMenuOpen(false)}>Book Tickets</a>
+            <a className="nav-cta" href="#donate" onClick={() => setMenuOpen(false)}>Donate</a>
+          </div>
         </nav>
         <div className="header-mobile-actions">
+          <a className="nav-cta nav-cta--ticket header-ticket-mobile" href="#tickets">Book Tickets</a>
           <a className="nav-cta header-donate-mobile" href="#donate">Donate</a>
           <button
             className="menu-button"
@@ -68,8 +76,8 @@ function App() {
             <p className="hero__tagline">{event.tagline}</p>
             <p className="hero__intro">A community cancer-awareness event, book launch, shared conversation and live music experience.</p>
             <div className="hero__actions">
-              <a className="button button--primary" href="#story">Discover the story <span aria-hidden="true">↓</span></a>
-              <a className="button button--ghost" href={`mailto:${event.contactEmail}?subject=Rhythms%20of%20Hope%20updates`}>Get event updates</a>
+              <a className="button button--primary" href="#tickets">Book Tickets <span aria-hidden="true">↗</span></a>
+              <a className="button button--ghost" href="#donate">Donate</a>
             </div>
             <div className="hero__status">
               <StatusPill>{event.planningWindow}</StatusPill>
@@ -137,18 +145,22 @@ function App() {
           <p className="medical-note" data-reveal><strong>A thoughtful foundation.</strong> Public-facing medical and awareness content will be developed with guidance from appropriate healthcare or cancer-support organisations.</p>
         </section>
 
+        <TicketCheckout />
+
         <DonationChooser programs={donationPrograms} />
 
         <section className="details section" id="details">
           <div className="details__intro" data-reveal>
-            <SectionHeading eyebrow="Event information" title="The journey is taking shape" body="Planning is underway. Dates, location, programme, speakers, tickets and book details will be shared after they are confirmed." />
-            <a className="button button--primary" href={`mailto:${event.contactEmail}?subject=Keep%20me%20updated%20about%20Rhythms%20of%20Hope`}>Join the update list <span aria-hidden="true">↗</span></a>
+            <SectionHeading eyebrow="Event information" title="A shared evening of awareness, story and music" body="Join Moksha Base and the wider community in Hamilton for a hopeful event centred on Siva’s journey and the people who walk alongside those affected by cancer." />
+            <a className="button button--primary" href="#tickets">Book Tickets <span aria-hidden="true">↗</span></a>
           </div>
           <dl className="details-list" data-reveal>
-            <div><dt>Timing</dt><dd>October 2026 <span>proposed</span></dd></div>
-            <div><dt>Location</dt><dd>To be confirmed</dd></div>
+            <div><dt>Date</dt><dd>Saturday, 17 October 2026</dd></div>
+            <div><dt>Time</dt><dd>Doors 4:00 pm <span>Show starts 5:00 pm</span></dd></div>
+            <div><dt>Venue</dt><dd>Te Whare Maui Event Centre <span>Hamilton</span></dd></div>
+            <div><dt>Tickets</dt><dd>NZ$22 total <span>NZ$20 ticket + NZ$2 fee · no GST</span></dd></div>
             <div><dt>Audience</dt><dd>Open to the wider community</dd></div>
-            <div><dt>Expected scale</dt><dd>150–300 people <span>subject to venue</span></dd></div>
+            <div><dt>Capacity</dt><dd>350 admissions</dd></div>
           </dl>
         </section>
 
@@ -171,7 +183,7 @@ function App() {
         </div>
         <div>
           <p className="footer__label">Event</p>
-          <a href="#story">The story</a><a href="#experience">Experience</a><a href="#purpose">Purpose</a><a href="#details">Event info</a>
+          <a href="#story">The story</a><a href="#experience">Experience</a><a href="#purpose">Purpose</a><a href="#tickets">Book tickets</a><a href="#details">Event info</a>
         </div>
         <div>
           <p className="footer__label">Contact</p>

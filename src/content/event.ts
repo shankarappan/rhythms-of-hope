@@ -25,8 +25,8 @@ export const event = {
   maoriName: 'Te Hīkoi o te Tūmanako',
   tagline: 'A Journey of Resilience',
   organiser: 'Moksha Base',
-  planningWindow: 'Proposed for October 2026',
-  locationStatus: 'Venue and city to be confirmed',
+  planningWindow: 'Saturday, 17 October 2026',
+  locationStatus: 'Te Whare Maui Event Centre · Hamilton',
   contactName: 'Abhishek Raj',
   contactRole: 'Band Manager — Moksha Base',
   contactEmail: 'info@mokshabase.com',
@@ -106,7 +106,7 @@ export const values = [
 ]
 
 export const futureFeatures = {
-  tickets: { enabled: false, label: 'Tickets' },
+  tickets: { enabled: true, label: 'Tickets' },
   donations: { enabled: true, label: 'Donations' },
   merchandise: { enabled: false, label: 'Merchandise' },
 }

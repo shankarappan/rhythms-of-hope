@@ -25,3 +25,29 @@ npm run lint
 ```
 
 The `main` branch deploys automatically to GitHub Pages.
+
+## GoDaddy API administration
+
+GoDaddy access is deliberately kept outside the public Vite application. Never
+use a `VITE_*` variable for the token: Vite exposes those values in the browser
+bundle.
+
+1. Revoke any token that has been pasted into chat, email, source code or a
+   terminal command.
+2. Generate a new GoDaddy Personal Access Token with the minimum required
+   scopes. The read-only connection check needs `domains.domain:read`.
+3. Copy the example file and add the new token locally:
+
+   ```bash
+   cp .env.example .env.local
+   ```
+
+4. Set `GODADDY_PAT` in `.env.local`, then verify access:
+
+   ```bash
+   npm run godaddy:check
+   ```
+
+The `.env.local` file is ignored by Git. The reusable client currently exposes
+only a read-only domain-list operation; DNS mutation should be added separately
+with explicit safeguards when it is required.
