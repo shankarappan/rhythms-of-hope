@@ -67,7 +67,7 @@ export async function sendTicketEmail(order: TicketOrder, origin: string) {
       from: "Moksha Base <info@mokshabase.com>",
       to: [order.buyerEmail],
       reply_to: "info@mokshabase.com",
-      subject: `${EVENT_NAME} tickets — ${order.tickets.map(ticket => ticket.number).join(", ")}`,
+      subject: "Hope Concert Tickets - Thanks for your ticket purchase",
       html,
       attachments: [{ filename: `rhythms-of-hope-${order.id}.pdf`, content: bytesToBase64(pdf) }],
     }),
