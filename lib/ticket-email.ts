@@ -17,6 +17,45 @@ function money(cents: number) {
   return new Intl.NumberFormat("en-NZ", { style: "currency", currency: "NZD" }).format(cents / 100);
 }
 
+function escapeHtml(value: string) {
+  return value.replace(
+    /[&<>"']/g,
+    character =>
+      ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#039;" })[
+        character
+      ]!,
+  );
+}
+
+function pdfSafeText(value: string) {
+  return value
+    .normalize("NFKD")
+    .replace(/\p{M}/gu, "")
+    .replace(/[^\x20-\x7E]/g, "?");
+}
+
+function drawMaoriSubtitle(
+  page: ReturnType<PDFDocument["addPage"]>,
+  font: Awaited<ReturnType<PDFDocument["embedFont"]>>,
+) {
+  const x = 44;
+  const y = 679;
+  const size = 16;
+  const color = rgb(0.47, 0.89, 0.3);
+  const subtitle = "Te Hikoi o te Tumanako";
+  page.drawText(subtitle, { x, y, size, font, color });
+  for (const prefix of ["Te H", "Te Hikoi o te T"]) {
+    const macronX = x + font.widthOfTextAtSize(prefix, size);
+    const letterWidth = font.widthOfTextAtSize(prefix === "Te H" ? "i" : "u", size);
+    page.drawLine({
+      start: { x: macronX + 0.4, y: y + size + 1.5 },
+      end: { x: macronX + Math.max(3.5, letterWidth - 0.4), y: y + size + 1.5 },
+      thickness: 1.1,
+      color,
+    });
+  }
+}
+
 async function createTicketPdf(order: TicketOrder, origin: string) {
   const pdf = await PDFDocument.create();
   const regular = await pdf.embedFont(StandardFonts.Helvetica);
@@ -27,13 +66,13 @@ async function createTicketPdf(order: TicketOrder, origin: string) {
     page.drawRectangle({ x: 0, y: 772, width: 595, height: 70, color: rgb(0.98, 0.3, 0.08) });
     page.drawText("MOKSHA BASE PRESENTS", { x: 44, y: 802, size: 10, font: bold, color: rgb(1, 1, 1) });
     page.drawText(EVENT_NAME.toUpperCase(), { x: 44, y: 712, size: 34, font: bold, color: rgb(1, 0.72, 0) });
-    page.drawText(EVENT_SUBTITLE, { x: 44, y: 679, size: 16, font: regular, color: rgb(0.47, 0.89, 0.3) });
+    drawMaoriSubtitle(page, regular);
     page.drawText("GENERAL ADMISSION", { x: 44, y: 626, size: 11, font: bold, color: rgb(0.75, 0.75, 0.72) });
     page.drawText(EVENT_DATE, { x: 44, y: 592, size: 17, font: bold, color: rgb(1, 1, 1) });
     page.drawText(EVENT_TIME, { x: 44, y: 565, size: 13, font: regular, color: rgb(0.82, 0.81, 0.78) });
     page.drawText(EVENT_VENUE, { x: 44, y: 538, size: 13, font: regular, color: rgb(0.82, 0.81, 0.78) });
     page.drawText(`Ticket ${ticket.number}`, { x: 44, y: 472, size: 22, font: bold, color: rgb(1, 1, 1) });
-    page.drawText(`Issued to ${order.buyerName}`, { x: 44, y: 445, size: 12, font: regular, color: rgb(0.68, 0.68, 0.65) });
+    page.drawText(`Issued to ${pdfSafeText(order.buyerName)}`, { x: 44, y: 445, size: 12, font: regular, color: rgb(0.68, 0.68, 0.65) });
     const qrDataUrl = await QRCode.toDataURL(`${origin}/check-in?token=${encodeURIComponent(ticket.token)}`, {
       width: 560,
       margin: 1,
@@ -55,20 +94,22 @@ export async function sendTicketEmail(order: TicketOrder, origin: string) {
   const pdf = await createTicketPdf(order, origin);
   const isComplimentary = order.kind === "complimentary";
   const rows = order.tickets
-    .map(ticket => `<li style="margin:6px 0"><strong>${ticket.number}</strong></li>`)
+    .map(ticket => `<li style="margin:6px 0"><strong>${escapeHtml(ticket.number)}</strong></li>`)
     .join("");
+  const buyerName = escapeHtml(order.buyerName);
+  const orderId = escapeHtml(order.id);
   const html = `
     <div style="margin:0;background:#090909;color:#f8f5ec;font-family:Arial,sans-serif;padding:32px 16px">
       <div style="max-width:640px;margin:auto;background:#111;border-top:5px solid #ffb600;padding:36px">
         <p style="color:#76e34d;letter-spacing:2px;font-size:11px;font-weight:700">MOKSHA BASE PRESENTS</p>
         <h1 style="font-size:36px;margin:12px 0 4px;color:#ffb600">${EVENT_NAME}</h1>
         <p style="margin:0 0 28px;color:#9fe981">${EVENT_SUBTITLE}</p>
-        <p>Kia ora ${order.buyerName},</p>
+        <p>Kia ora ${buyerName},</p>
         <p>Your ${isComplimentary ? "complimentary " : ""}booking is confirmed. Your QR-coded tickets are attached as a PDF.</p>
         <div style="background:#191919;padding:20px;margin:24px 0;border-left:3px solid #ff4b18">
           <strong>${EVENT_DATE}</strong><br>${EVENT_TIME}<br>${EVENT_VENUE}
         </div>
-        <p><strong>Order reference:</strong> ${order.id}</p>
+        <p><strong>Order reference:</strong> ${orderId}</p>
         <p><strong>Tickets:</strong> ${order.quantity}</p>
         <ul style="padding-left:20px">${rows}</ul>
         <table style="width:100%;border-collapse:collapse;margin:26px 0;color:#f8f5ec">

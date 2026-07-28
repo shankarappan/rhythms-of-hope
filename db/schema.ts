@@ -49,3 +49,14 @@ export const webhookEvents = sqliteTable("webhook_events", {
   eventType: text("event_type").notNull(),
   processedAt: text("processed_at").notNull(),
 });
+
+export const donationAcknowledgements = sqliteTable("donation_acknowledgements", {
+  eventId: text("event_id").primaryKey(),
+  stripeSessionId: text("stripe_session_id").notNull().unique(),
+  buyerName: text("buyer_name").notNull(),
+  buyerEmail: text("buyer_email").notNull(),
+  amountTotal: integer("amount_total").notNull(),
+  currency: text("currency").notNull(),
+  emailStatus: text("email_status").notNull().default("pending"),
+  createdAt: text("created_at").notNull(),
+});

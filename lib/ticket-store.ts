@@ -68,6 +68,16 @@ async function ensureSchema() {
       event_type TEXT NOT NULL,
       processed_at TEXT NOT NULL
     )`),
+    db.prepare(`CREATE TABLE IF NOT EXISTS donation_acknowledgements (
+      event_id TEXT PRIMARY KEY NOT NULL,
+      stripe_session_id TEXT NOT NULL UNIQUE,
+      buyer_name TEXT NOT NULL,
+      buyer_email TEXT NOT NULL,
+      amount_total INTEGER NOT NULL,
+      currency TEXT NOT NULL,
+      email_status TEXT DEFAULT 'pending' NOT NULL,
+      created_at TEXT NOT NULL
+    )`),
   ]);
   schemaReady = true;
 }
@@ -290,6 +300,67 @@ export async function fulfillCheckout(eventId: string, session: CheckoutSession)
 export async function markEmailStatus(orderId: string, status: "sent" | "failed") {
   await getRuntimeEnv().DB.prepare("UPDATE orders SET email_status = ? WHERE id = ?")
     .bind(status, orderId).run();
+}
+
+export type DonationAcknowledgement = {
+  eventId: string;
+  stripeSessionId: string;
+  buyerName: string;
+  buyerEmail: string;
+  amountTotal: number;
+  currency: string;
+  emailStatus: string;
+  createdAt: string;
+};
+
+export async function prepareDonationAcknowledgement(
+  eventId: string,
+  session: CheckoutSession,
+): Promise<DonationAcknowledgement> {
+  await ensureSchema();
+  const buyerEmail = session.customer_details?.email?.trim();
+  const buyerName = session.customer_details?.name?.trim() || "there";
+  if (!buyerEmail) throw new Error("Stripe did not return the donor email.");
+  const createdAt = new Date().toISOString();
+  const db = getRuntimeEnv().DB;
+  await db.prepare(
+    `INSERT OR IGNORE INTO donation_acknowledgements
+      (event_id, stripe_session_id, buyer_name, buyer_email, amount_total, currency, email_status, created_at)
+     VALUES (?, ?, ?, ?, ?, ?, 'pending', ?)`,
+  ).bind(
+    eventId,
+    session.id,
+    buyerName,
+    buyerEmail,
+    session.amount_total ?? 0,
+    session.currency ?? "nzd",
+    createdAt,
+  ).run();
+  const row = await db.prepare(
+    `SELECT event_id, stripe_session_id, buyer_name, buyer_email, amount_total, currency,
+            email_status, created_at
+     FROM donation_acknowledgements WHERE event_id = ?`,
+  ).bind(eventId).first<Record<string, string | number>>();
+  if (!row) throw new Error("Donation acknowledgement could not be prepared.");
+  return {
+    eventId: String(row.event_id),
+    stripeSessionId: String(row.stripe_session_id),
+    buyerName: String(row.buyer_name),
+    buyerEmail: String(row.buyer_email),
+    amountTotal: Number(row.amount_total),
+    currency: String(row.currency),
+    emailStatus: String(row.email_status),
+    createdAt: String(row.created_at),
+  };
+}
+
+export async function markDonationEmailStatus(
+  eventId: string,
+  status: "sent" | "failed",
+) {
+  await getRuntimeEnv().DB.prepare(
+    "UPDATE donation_acknowledgements SET email_status = ? WHERE event_id = ?",
+  ).bind(status, eventId).run();
 }
 
 export async function getOrderForCustomer(stripeSessionId: string) {

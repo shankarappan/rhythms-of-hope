@@ -14,6 +14,7 @@ import { bytesToBase64Url, constantTimeEqual } from "./encoding";
 export type CheckoutSession = {
   id: string;
   url: string | null;
+  payment_link?: string | null;
   amount_total?: number | null;
   currency?: string | null;
   payment_intent?: string | null;
