@@ -284,7 +284,7 @@ h1, h2, h3, p { margin-top: 0; }
   :root { --container: min(100% - 36px, 760px); }
   .site-header { height: 82px; }
   .header-mobile-actions { display: flex; align-items: center; gap: 16px; }
-  .header-donate-mobile { min-height: 40px; padding: 0 17px; display: inline-flex; align-items: center; justify-content: center; }
+  .header-ticket-mobile, .header-donate-mobile { min-height: 40px; padding: 0 17px; display: inline-flex; align-items: center; justify-content: center; line-height: 1; white-space: nowrap; }
   .menu-button { position: relative; z-index: 2; display: grid; gap: 7px; padding: 16px 0 16px 16px; }
   .menu-button i { width: 25px; height: 1px; background: #fff; display: block; }
   .site-nav { display: none; position: absolute; top: 70px; right: 0; width: min(360px, calc(100vw - 36px)); padding: 28px; flex-direction: column; align-items: stretch; gap: 22px; background: #111; border: 1px solid var(--line); box-shadow: 0 30px 80px rgba(0,0,0,.5); }
@@ -317,7 +317,7 @@ h1, h2, h3, p { margin-top: 0; }
   .brand span { font-size: 10px; }
   .brand img { width: 35px; height: 35px; }
   .header-mobile-actions { gap: 7px; }
-  .header-ticket-mobile, .header-donate-mobile { min-height: 36px; padding: 0 10px; font-size: 8px; letter-spacing: .08em; }
+  .header-ticket-mobile, .header-donate-mobile { min-height: 36px; padding: 0 10px; font-size: 9px; letter-spacing: .06em; }
   .hero { min-height: 850px; padding-top: 126px; align-items: start; }
   .hero__poster {
     inset: 29% -22% 0 0;
