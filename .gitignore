@@ -1,10 +1,15 @@
 node_modules/
 dist/
+.next/
+.wrangler/
 .DS_Store
 *.log
 *.tsbuildinfo
 vite.config.js
 vite.config.d.ts
+.env
+.env.*
+!.env.example
 
 # Internal planning/source materials are not part of the public website repository.
 AGENTS.md

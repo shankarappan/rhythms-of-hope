@@ -1,0 +1,33 @@
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "rhythms-of-hope",
+  "main": "./worker/index.ts",
+  "compatibility_date": "2026-05-15",
+  "compatibility_flags": ["nodejs_compat"],
+  "workers_dev": true,
+  "observability": {
+    "enabled": true
+  },
+  "vars": {
+    "TICKETING_ENABLED": "false"
+  },
+  "secrets": {
+    "required": [
+      "STRIPE_SECRET_KEY",
+      "STRIPE_WEBHOOK_SECRET",
+      "STRIPE_COMPLIMENTARY_COUPON_ID",
+      "COMPLIMENTARY_CODE_HASH",
+      "RESEND_API_KEY",
+      "STATUS_PASSWORD",
+      "SESSION_SIGNING_SECRET"
+    ]
+  },
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "rhythms-of-hope-tickets",
+      "database_id": "935498f4-083f-463f-8a6c-38de2a903d2b",
+      "migrations_dir": "drizzle"
+    }
+  ]
+}
