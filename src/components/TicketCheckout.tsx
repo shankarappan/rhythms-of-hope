@@ -4,10 +4,8 @@ import { FormEvent, useEffect, useState } from "react";
 import { SectionHeading } from "./SectionHeading";
 
 type Availability = {
-  remaining: number;
-  paidAvailable: number;
-  complimentaryAvailable: number;
   salesOpen: boolean;
+  soldOut: boolean;
 };
 
 export function TicketCheckout() {
@@ -47,7 +45,7 @@ export function TicketCheckout() {
   };
 
   const salesOpen = availability?.salesOpen ?? false;
-  const soldOut = availability?.remaining === 0;
+  const soldOut = availability?.soldOut ?? false;
 
   return (
     <section className="tickets section" id="tickets">
