@@ -1,3 +1,5 @@
+import { EVENT_ADDRESS, EVENT_VENUE } from '../../lib/event-config'
+
 export type Experience = {
   number: string
   title: string
@@ -26,7 +28,7 @@ export const event = {
   tagline: 'A Journey of Resilience',
   organiser: 'Moksha Base',
   planningWindow: 'Saturday, 17 October 2026',
-  locationStatus: 'Te Whare Maui Event Centre · Hamilton',
+  locationStatus: `${EVENT_VENUE} · ${EVENT_ADDRESS}`,
   contactName: 'Abhishek Raj',
   contactRole: 'Band Manager — Moksha Base',
   contactEmail: 'info@mokshabase.com',
@@ -36,13 +38,13 @@ export const donationPrograms: DonationProgram[] = [
   {
     id: 'moksha-base',
     number: '01',
-    eyebrow: 'Community programme',
-    title: 'Strengthen local cancer support',
-    description: 'Help Moksha Base create Rhythms of Hope, community events and meetups for people affected by cancer, and respond to immediate practical needs.',
+    eyebrow: 'Moksha Base event programme',
+    title: 'Support Moksha Base — HOPE Concert',
+    description: 'Help fund the planning and delivery of this purposeful community event, bringing cancer awareness, storytelling, connection and live music together.',
     recipient: 'Moksha Base',
     provider: 'Stripe',
     url: 'https://donate.stripe.com/00w6oH2Ff7Pz9hd65rfjG04',
-    linkLabel: 'Donate to Event Cause',
+    linkLabel: 'Support the HOPE Concert',
     details: [
       'Choose any amount from NZ$10',
       'Named or anonymous acknowledgement',
