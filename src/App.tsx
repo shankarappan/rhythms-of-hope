@@ -166,7 +166,7 @@ function App() {
             <div><dt>Date</dt><dd>Saturday, 17 October 2026</dd></div>
             <div><dt>Time</dt><dd>Doors 4:00 pm <span>Show starts 5:00 pm</span></dd></div>
             <div><dt>Venue</dt><dd>Te Whare Maui Event Centre <span>Hamilton</span></dd></div>
-            <div><dt>Tickets</dt><dd>NZ$22 total <span>NZ$20 ticket + NZ$2 fee · no GST</span></dd></div>
+            <div><dt>Tickets</dt><dd>NZ$25 total <span>NZ$23 ticket + NZ$2 fee · no GST</span></dd></div>
             <div><dt>Audience</dt><dd>Open to the wider community</dd></div>
           </dl>
         </section>
