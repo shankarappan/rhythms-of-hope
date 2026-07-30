@@ -62,7 +62,7 @@ export function TicketCheckout() {
       </div>
       <form className="ticket-checkout" onSubmit={submit} data-reveal>
         <div className="ticket-checkout__heading">
-          <div><span>General admission</span><strong>NZ$22</strong><small>NZ$20 ticket + NZ$2 booking/processing fee</small></div>
+          <div><span>General admission</span><strong>NZ$25</strong><small>NZ$23 ticket + NZ$2 booking/processing fee</small></div>
         </div>
         <label className="ticket-field">
           <span>Number of tickets</span>
