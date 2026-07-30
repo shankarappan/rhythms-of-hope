@@ -99,10 +99,10 @@ export const experiences: Experience[] = [
 ]
 
 export const values = [
-  ['Awareness', 'Encouraging informed conversations and recognising the value of early diagnosis.'],
-  ['Connection', 'Creating room for patients, families, caregivers and professionals to meet.'],
-  ['Wellbeing', 'Using music and storytelling to support reflection, belonging and healing.'],
-  ['Community', 'Honouring the networks of friendship, faith, care and practical support around every person.'],
+  ['Awareness', 'Creating space for informed, accessible conversations about cancer and recognising the importance of early diagnosis.'],
+  ['Connection', 'Bringing patients, survivors, families, caregivers, healthcare voices and the wider community into one welcoming room.'],
+  ['Wellbeing', 'Using music, storytelling and shared reflection to create moments of belonging, encouragement and emotional release.'],
+  ['Community', 'Honouring the whānau, friends, faith communities, professionals and supporters who help ensure no one faces cancer alone.'],
 ]
 
 export const futureFeatures = {
