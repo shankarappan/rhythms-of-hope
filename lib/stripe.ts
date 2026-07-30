@@ -1,6 +1,7 @@
 import { getRuntimeEnv } from "@/db";
 import {
   BOOKING_FEE_CENTS,
+  EVENT_ADDRESS,
   EVENT_DATE,
   EVENT_NAME,
   EVENT_TIME,
@@ -9,7 +10,7 @@ import {
   TICKET_PRICE_CENTS,
   type TicketKind,
 } from "./event-config";
-import { bytesToBase64Url, constantTimeEqual } from "./encoding";
+import { constantTimeEqual } from "./encoding";
 
 export type CheckoutSession = {
   id: string;
@@ -43,7 +44,7 @@ export async function createStripeCheckout(args: {
   body.set("line_items[0][price_data][product_data][name]", `${EVENT_NAME} — General Admission`);
   body.set(
     "line_items[0][price_data][product_data][description]",
-    `${EVENT_DATE} · ${EVENT_TIME} · ${EVENT_VENUE}`,
+    `${EVENT_DATE} · ${EVENT_TIME} · ${EVENT_VENUE}, ${EVENT_ADDRESS}`,
   );
   body.set("line_items[0][quantity]", String(args.quantity));
   body.set("line_items[1][price_data][currency]", "nzd");

@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from 'react'
+import { EVENT_ADDRESS, EVENT_DATE, EVENT_DOORS_TIME, EVENT_SHOW_TIME, EVENT_VENUE } from '../lib/event-config'
 import { DonationChooser } from './components/DonationChooser'
 import { ExperienceCard } from './components/ExperienceCard'
 import { SectionHeading } from './components/SectionHeading'
@@ -163,9 +164,9 @@ function App() {
             <a className="button button--primary" href="#tickets">Book Tickets <span aria-hidden="true">↗</span></a>
           </div>
           <dl className="details-list" data-reveal>
-            <div><dt>Date</dt><dd>Saturday, 17 October 2026</dd></div>
-            <div><dt>Time</dt><dd>Doors 4:00 pm <span>Show starts 5:00 pm</span></dd></div>
-            <div><dt>Venue</dt><dd>Te Whare Maui Event Centre <span>Hamilton</span></dd></div>
+            <div><dt>Date</dt><dd>{EVENT_DATE}</dd></div>
+            <div><dt>Time</dt><dd>Doors {EVENT_DOORS_TIME}<span>Show starts {EVENT_SHOW_TIME}</span></dd></div>
+            <div><dt>Venue</dt><dd>{EVENT_VENUE}<span>{EVENT_ADDRESS}</span></dd></div>
             <div><dt>Tickets</dt><dd>NZ$25 total <span>NZ$23 ticket + NZ$2 fee · no GST</span></dd></div>
             <div><dt>Audience</dt><dd>Open to the wider community</dd></div>
           </dl>
