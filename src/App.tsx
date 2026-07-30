@@ -68,10 +68,6 @@ function App() {
         <section className="hero" id="top">
           <div className="hero__aurora" aria-hidden="true" />
           <div className="hero__poster" aria-hidden="true" />
-          <p className="hero__concert-line">
-            <span>A <strong>concert</strong> for</span>
-            <span>cancer awareness</span>
-          </p>
           <div className="hero__content">
             <p className="hero__presenter">Moksha Base presents</p>
             <img className="hero__title" src={assetUrl('hope-title.png')} alt="Hope" width="871" height="262" fetchPriority="high" />
