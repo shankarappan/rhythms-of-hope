@@ -1,7 +1,15 @@
 "use client";
 
 import { FormEvent, useEffect, useState } from "react";
-import { BOOKING_FEE_CENTS, TICKET_PRICE_CENTS } from "../../lib/event-config";
+import {
+  BOOKING_FEE_CENTS,
+  EVENT_ADDRESS,
+  EVENT_DATE,
+  EVENT_DOORS_TIME,
+  EVENT_SHOW_TIME,
+  EVENT_VENUE,
+  TICKET_PRICE_CENTS,
+} from "../../lib/event-config";
 import { SectionHeading } from "./SectionHeading";
 
 type Availability = {
@@ -57,8 +65,8 @@ export function TicketCheckout() {
           body="Book without creating an account. Your name and email are collected securely at Stripe Checkout, then your numbered QR tickets and receipt are sent by Moksha Base."
         />
         <div className="ticket-event-line">
-          <p><strong>Saturday, 17 October 2026</strong><span>Doors 4:00 pm · Show 5:00 pm</span></p>
-          <p><strong>Te Whare Maui Event Centre</strong><span>Hamilton</span></p>
+          <p><strong>{EVENT_DATE}</strong><span>Doors {EVENT_DOORS_TIME} · Show {EVENT_SHOW_TIME}</span></p>
+          <p><strong>{EVENT_VENUE}</strong><span>{EVENT_ADDRESS}</span></p>
         </div>
       </div>
       <form className="ticket-checkout" onSubmit={submit} data-reveal>

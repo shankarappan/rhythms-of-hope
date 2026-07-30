@@ -32,7 +32,7 @@ export async function sendDonationAcknowledgement(
         <p style="color:#ffb600;letter-spacing:2px;font-size:11px;font-weight:700">MOKSHA BASE</p>
         <h1 style="font-size:34px;margin:12px 0 22px;color:#76e34d">Thank you for your support</h1>
         <p>Kia ora ${buyerName},</p>
-        <p>We have received your donation to Moksha Base. Your support helps community-led music, storytelling, connection, and hopeful events such as Rhythms of Hope.</p>
+        <p>We have received your donation to Moksha Base in support of the HOPE Concert. Your contribution helps fund the planning and delivery of this purposeful community event, bringing cancer awareness, storytelling, connection, and live music together.</p>
         <div style="background:#191919;padding:20px;margin:24px 0;border-left:3px solid #ffb600">
           <p style="margin:0 0 8px;color:#aaa;font-size:12px">AMOUNT RECEIVED</p>
           <strong style="font-size:25px">${total}</strong>
@@ -52,7 +52,7 @@ export async function sendDonationAcknowledgement(
       from: "Moksha Base <info@mokshabase.com>",
       to: [acknowledgement.buyerEmail],
       reply_to: "info@mokshabase.com",
-      subject: "Thank you for your Moksha Base donation",
+      subject: "Thank you for supporting the HOPE Concert",
       html,
     }),
   });

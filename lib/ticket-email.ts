@@ -1,6 +1,7 @@
 import { getRuntimeEnv } from "@/db";
 import {
   BOOKING_FEE_CENTS,
+  EVENT_ADDRESS,
   EVENT_DATE,
   EVENT_NAME,
   EVENT_SUBTITLE,
@@ -47,7 +48,7 @@ export async function sendTicketEmail(order: TicketOrder, origin: string) {
         <p>Kia ora ${buyerName},</p>
         <p>Your ${isComplimentary ? "complimentary " : ""}booking is confirmed. Your QR-coded tickets are attached as a PDF.</p>
         <div style="background:#191919;padding:20px;margin:24px 0;border-left:3px solid #ff4b18">
-          <strong>${EVENT_DATE}</strong><br>${EVENT_TIME}<br>${EVENT_VENUE}
+          <strong>${EVENT_DATE}</strong><br>${EVENT_TIME}<br>${EVENT_VENUE}<br>${EVENT_ADDRESS}
         </div>
         <p><strong>Order reference:</strong> ${orderId}</p>
         <p><strong>Tickets:</strong> ${order.quantity}</p>

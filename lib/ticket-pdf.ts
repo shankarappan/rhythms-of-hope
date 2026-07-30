@@ -2,6 +2,7 @@ import { PDFDocument, StandardFonts, rgb } from "pdf-lib";
 import QRCode from "qrcode";
 import hopeTitleDataUrl from "./assets/hope-title.png?inline";
 import {
+  EVENT_ADDRESS,
   EVENT_DATE,
   EVENT_NAME,
   EVENT_TIME,
@@ -55,6 +56,7 @@ export async function createTicketPdf(order: TicketOrder, origin: string) {
     page.drawText(EVENT_DATE, { x: 44, y: 516, size: 17, font: bold, color: rgb(1, 1, 1) });
     page.drawText(EVENT_TIME, { x: 44, y: 489, size: 13, font: regular, color: rgb(0.82, 0.81, 0.78) });
     page.drawText(EVENT_VENUE, { x: 44, y: 462, size: 13, font: regular, color: rgb(0.82, 0.81, 0.78) });
+    page.drawText(EVENT_ADDRESS, { x: 44, y: 440, size: 11, font: regular, color: rgb(0.68, 0.68, 0.65) });
     page.drawText(`Ticket ${ticket.number}`, { x: 44, y: 406, size: 22, font: bold, color: rgb(1, 1, 1) });
     page.drawText(`Issued to ${pdfSafeText(order.buyerName)}`, { x: 44, y: 379, size: 12, font: regular, color: rgb(0.68, 0.68, 0.65) });
     const qrDataUrl = await QRCode.toDataURL(`${origin}/check-in?token=${encodeURIComponent(ticket.token)}`, {
