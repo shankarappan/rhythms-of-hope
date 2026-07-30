@@ -130,8 +130,16 @@ function App() {
         </section>
 
         <section className="purpose section" id="purpose">
-          <div data-reveal>
-            <SectionHeading eyebrow="Why we are gathering" title="Hope with purpose" body="An uplifting event with a serious intention: to strengthen awareness, connection and community support." />
+          <div className="purpose__intro" data-reveal>
+            <SectionHeading
+              eyebrow="Why we are gathering"
+              title="Hope with purpose"
+              body="Rhythms of Hope turns one deeply personal cancer journey into a shared invitation to learn, listen, connect and show up for one another."
+            />
+            <p className="purpose__promise">
+              <span>Come for the music.</span>
+              <strong>Leave more informed, more connected and reminded that no one should face cancer alone.</strong>
+            </p>
           </div>
           <div className="values-grid" data-reveal>
             {values.map(([title, body], index) => (
@@ -142,7 +150,7 @@ function App() {
               </article>
             ))}
           </div>
-          <p className="medical-note" data-reveal><strong>A thoughtful foundation.</strong> Public-facing medical and awareness content will be developed with guidance from appropriate healthcare or cancer-support organisations.</p>
+          <p className="medical-note" data-reveal><strong>Grounded in care.</strong> Public-facing medical and awareness content will be developed with guidance from appropriate healthcare or cancer-support organisations.</p>
         </section>
 
         <TicketCheckout />
