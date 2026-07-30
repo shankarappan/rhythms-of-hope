@@ -1,6 +1,7 @@
 "use client";
 
 import { FormEvent, useEffect, useState } from "react";
+import { BOOKING_FEE_CENTS, TICKET_PRICE_CENTS } from "../../lib/event-config";
 import { SectionHeading } from "./SectionHeading";
 
 type Availability = {
@@ -14,8 +15,8 @@ export function TicketCheckout() {
   const [availability, setAvailability] = useState<Availability | null>(null);
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState("");
-  const subtotal = quantity * 20;
-  const fee = quantity * 2;
+  const subtotal = quantity * TICKET_PRICE_CENTS;
+  const fee = quantity * BOOKING_FEE_CENTS;
   const total = subtotal + fee;
 
   useEffect(() => {
@@ -84,9 +85,9 @@ export function TicketCheckout() {
         </label>
         {coupon && <p className="ticket-code-note">Your code will be validated securely when you continue.</p>}
         <div className="ticket-summary">
-          <div><span>Tickets × {quantity}</span><strong>NZ${subtotal.toFixed(2)}</strong></div>
-          <div><span>Booking/processing fee × {quantity}</span><strong>NZ${fee.toFixed(2)}</strong></div>
-          <div className="ticket-summary__total"><span>Total before any valid discount</span><strong>NZ${total.toFixed(2)}</strong></div>
+          <div><span>Tickets × {quantity}</span><strong>NZ${(subtotal / 100).toFixed(2)}</strong></div>
+          <div><span>Booking/processing fee × {quantity}</span><strong>NZ${(fee / 100).toFixed(2)}</strong></div>
+          <div className="ticket-summary__total"><span>Total before any valid discount</span><strong>NZ${(total / 100).toFixed(2)}</strong></div>
           <small>No GST charged</small>
         </div>
         {error && <p className="form-error" role="alert">{error}</p>}
