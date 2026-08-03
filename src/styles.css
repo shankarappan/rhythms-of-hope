@@ -19,7 +19,7 @@
 
 * { box-sizing: border-box; }
 html { scroll-behavior: smooth; background: var(--ink); }
-body { margin: 0; background: var(--ink); color: var(--white); font-family: var(--body); -webkit-font-smoothing: antialiased; }
+body { margin: 0; overflow-x: hidden; background: var(--ink); color: var(--white); font-family: var(--body); -webkit-font-smoothing: antialiased; }
 body::selection { background: var(--gold); color: var(--ink); }
 a { color: inherit; text-decoration: none; }
 button, a { -webkit-tap-highlight-color: transparent; }
@@ -49,6 +49,15 @@ h1, h2, h3, p { margin-top: 0; }
 .hero__poster { position: absolute; z-index: -3; inset: 0 0 0 42%; background-image: linear-gradient(90deg, var(--ink) 0%, rgba(5,5,5,.12) 35%, rgba(5,5,5,.3) 100%), url('/hope-poster.png'); background-size: cover; background-position: center 44%; filter: saturate(1.18) contrast(1.04); opacity: .88; }
 .hero__aurora { position: absolute; z-index: -2; inset: -20%; background: radial-gradient(circle at 62% 53%, rgba(255,182,0,.22), transparent 25%), radial-gradient(circle at 78% 50%, rgba(49,167,141,.22), transparent 28%), radial-gradient(circle at 55% 60%, rgba(255,75,24,.17), transparent 30%); filter: blur(40px); }
 .hero__content { width: var(--container); margin: 0 auto; position: relative; z-index: 2; }
+.hero__sponsor { position: absolute; top: -22px; right: 70px; width: 330px; min-height: 146px; padding: 12px 14px 12px 16px; display: grid; grid-template-columns: 142px 1fr; align-items: center; gap: 13px; overflow: hidden; border-left: 1px solid rgba(255,182,0,.72); background: linear-gradient(90deg, rgba(5,5,5,.92), rgba(5,5,5,.58)); box-shadow: 0 22px 60px rgba(0,0,0,.24); transition: border-color .2s, background .2s, transform .2s; }
+.hero__sponsor:hover, .hero__sponsor:focus-visible { transform: translateY(-3px); border-color: #ffd05b; background: linear-gradient(90deg, rgba(8,8,7,.98), rgba(8,8,7,.72)); }
+.hero__sponsor:focus-visible { outline: 2px solid var(--gold); outline-offset: 4px; }
+.hero__sponsor-art { align-self: stretch; display: grid; place-items: center; }
+.hero__sponsor-art img { width: 100%; height: 100%; object-fit: contain; filter: drop-shadow(0 12px 24px rgba(0,0,0,.42)); }
+.hero__sponsor-copy { min-width: 0; display: flex; flex-direction: column; align-items: flex-start; }
+.hero__sponsor-copy small { margin-bottom: 10px; color: #a8a49b; font: 700 8px/1 var(--display); letter-spacing: .2em; text-transform: uppercase; }
+.hero__sponsor-copy strong { color: #fff; font: 650 15px/1.16 var(--display); letter-spacing: -.025em; }
+.hero__sponsor-copy > span { margin-top: 10px; color: #e6b333; font: 700 7px/1.45 var(--display); letter-spacing: .1em; }
 .hero__presenter { margin: 0 0 22px; font: 600 11px/1 var(--display); text-transform: uppercase; letter-spacing: .42em; color: #c3c0ba; }
 .hero__title { width: min(590px, 68vw); height: auto; display: block; margin-left: -12px; filter: drop-shadow(0 16px 40px rgba(0,0,0,.48)); }
 .hero__kicker { margin: 12px 0 0; font: 700 clamp(17px, 2vw, 25px)/1 var(--display); letter-spacing: .32em; text-transform: uppercase; background: linear-gradient(90deg, var(--ember), var(--gold), var(--green)); -webkit-background-clip: text; background-clip: text; color: transparent; }
@@ -333,6 +342,7 @@ h1, h2, h3, p { margin-top: 0; }
   .nav-cta { text-align: center; }
   .hero__poster { left: 28%; opacity: .7; }
   .hero__content { padding-top: 40px; }
+  .hero__sponsor { position: relative; top: auto; right: auto; width: min(360px, 100%); margin: 0 0 28px; }
   .hero__intro { max-width: 480px; }
   .story { grid-template-columns: 1fr; }
   .story__quote { position: relative; top: auto; margin-top: 0; }
@@ -359,6 +369,10 @@ h1, h2, h3, p { margin-top: 0; }
   .header-mobile-actions { gap: 7px; }
   .header-ticket-mobile, .header-donate-mobile { min-height: 36px; padding: 0 10px; font-size: 9px; letter-spacing: .06em; }
   .hero { min-height: 850px; padding-top: 126px; align-items: start; }
+  .hero__sponsor { width: 100%; min-height: 118px; padding: 8px 10px 8px 12px; grid-template-columns: 118px 1fr; gap: 10px; background: linear-gradient(90deg, rgba(5,5,5,.94), rgba(5,5,5,.44)); }
+  .hero__sponsor-copy small { margin-bottom: 7px; font-size: 7px; }
+  .hero__sponsor-copy strong { font-size: 13px; }
+  .hero__sponsor-copy > span { margin-top: 7px; font-size: 6px; }
   .hero__poster {
     inset: 29% -22% 0 0;
     background-image:

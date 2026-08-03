@@ -34,6 +34,16 @@ export const event = {
   contactEmail: 'info@mokshabase.com',
 }
 
+export const titleSponsor = {
+  name: 'CJFS',
+  presenterLine: 'CJFS proudly presents',
+  organiserLine: 'A Moksha Base event',
+  tagline: 'TAILORED SOLUTIONS | TRUSTED GUIDANCE',
+  website: 'https://cjfs.co.nz',
+  heroImage: '/cjfs-title-sponsor.png',
+  logo: '/cjfs-logo.png',
+}
+
 export const donationPrograms: DonationProgram[] = [
   {
     id: 'moksha-base',

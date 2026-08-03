@@ -7,7 +7,7 @@ import { ExperienceCard } from './components/ExperienceCard'
 import { SectionHeading } from './components/SectionHeading'
 import { StatusPill } from './components/StatusPill'
 import { TicketCheckout } from './components/TicketCheckout'
-import { donationPrograms, event, experiences, values } from './content/event'
+import { donationPrograms, event, experiences, titleSponsor, values } from './content/event'
 import './styles.css'
 
 const navItems = [
@@ -70,7 +70,23 @@ function App() {
           <div className="hero__aurora" aria-hidden="true" />
           <div className="hero__poster" aria-hidden="true" />
           <div className="hero__content">
-            <p className="hero__presenter">Moksha Base presents</p>
+            <a
+              className="hero__sponsor"
+              href={titleSponsor.website}
+              target="_blank"
+              rel="noreferrer"
+              aria-label="Visit CJFS, title sponsor of Rhythms of Hope"
+            >
+              <span className="hero__sponsor-art">
+                <img src={titleSponsor.heroImage} alt="" width="656" height="494" fetchPriority="high" />
+              </span>
+              <span className="hero__sponsor-copy">
+                <small>Title sponsor</small>
+                <strong>{titleSponsor.presenterLine}</strong>
+                <span>{titleSponsor.tagline}</span>
+              </span>
+            </a>
+            <p className="hero__presenter">{titleSponsor.organiserLine}</p>
             <img className="hero__title" src={assetUrl('hope-title.png')} alt="Hope" width="871" height="262" fetchPriority="high" />
             <p className="hero__kicker">Rhythms of Hope</p>
             <h1>{event.maoriName}</h1>
