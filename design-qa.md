@@ -51,6 +51,34 @@ final result: passed
 
 ---
 
+# Design QA — transparent CJFS hero treatment
+
+- Issue reference: `/var/folders/n2/d96307fd2c91hg5g4xt_f24m0000gn/T/codex-clipboard-f4ddf38e-7032-493f-b2af-c4a836d690a0.png`
+- Desktop implementation: `/private/tmp/cjfs-transparent-desktop.png`
+- Mobile implementation checked in the in-app browser at 390 × 844 CSS pixels
+- Combined comparison: `/private/tmp/cjfs-transparent-comparison.png`
+
+## Findings
+
+No actionable P0, P1, or P2 findings remain.
+
+- Root cause: the earlier combined sponsor PNG had an opaque alpha channel, so its black canvas remained visible against the hero’s subtly varied background.
+- Asset fidelity: the supplied transparent CJFS logo-and-portrait artwork is now used directly without redrawing or generative alteration.
+- Tagline: `TAILORED SOLUTIONS | TRUSTED GUIDANCE` is rendered directly beneath the transparent artwork, with the approved gold emphasis retained.
+- Blending: the opaque rectangle, screen blend mode, and edge mask are removed; the transparent image now settles naturally over the existing hero background.
+- Hierarchy: the sponsor artwork is slightly smaller and remains secondary to the HOPE title.
+- Alignment: sponsor artwork, presenter line, organiser line, and HOPE title remain on the established left-hand visual axis.
+- Responsive layout: desktop and 390 × 844 mobile views show no overlap or horizontal overflow.
+- Interaction: the sponsor treatment remains unlinked as requested.
+
+## Comparison decision
+
+The final treatment removes the visible rectangular field while preserving the sponsor’s supplied artwork, tagline, prominence, and the existing hero composition.
+
+final result: passed
+
+---
+
 # Design QA — CJFS hero alignment and tagline cache fix
 
 - Alignment reference: `/var/folders/n2/d96307fd2c91hg5g4xt_f24m0000gn/T/codex-clipboard-c1297efa-c4bd-49a8-9143-428e31997d03.png`
