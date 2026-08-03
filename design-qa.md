@@ -174,3 +174,29 @@ final result: passed
 The placement-revision section above supersedes the earlier sponsor-card treatment. The current website and ticket email contain no hyperlink to the CJFS website.
 
 final result: passed
+
+---
+
+# Design QA — mobile sponsor spacing and alignment
+
+- Issue reference: `/Users/shankar/Downloads/Rhythms of Hope  Moksha Base 3.png`
+- Corrected mobile implementation: `/private/tmp/mobile-sponsor-spacing-final.png`
+- Combined comparison: `/private/tmp/mobile-sponsor-spacing-comparison.png`
+- Checked viewports: 390 × 844, 430 × 932, and 1280 × 720 CSS pixels
+
+## Findings
+
+No actionable P0, P1, or P2 findings remain.
+
+- Top spacing: the sponsor artwork now begins approximately 21px below the mobile header divider, replacing the large empty field shown in the supplied capture.
+- Alignment: `A MOKSHA BASE EVENT` now follows the sponsor artwork’s visible left edge instead of inheriting the HOPE title’s negative offset.
+- Title alignment: the HOPE artwork and `RHYTHMS OF HOPE` retain their established mobile alignment.
+- Scope: all corrections are contained inside the `max-width: 620px` breakpoint; desktop hero spacing remains unchanged at 178px.
+- Responsive layout: the sponsor, organiser line and HOPE title remain in normal flow at both checked phone widths, with no overlap.
+- Browser console: no warnings or errors were present during final checks.
+
+## Comparison decision
+
+The corrected mobile composition removes the unnecessary pause between navigation and sponsorship, while creating a cleaner shared left axis for the sponsor identity and organiser attribution.
+
+final result: passed
