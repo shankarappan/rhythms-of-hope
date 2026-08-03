@@ -42,14 +42,14 @@ export async function sendTicketEmail(order: TicketOrder, origin: string) {
   const html = `
     <div style="margin:0;background:#090909;color:#f8f5ec;font-family:Arial,sans-serif;padding:32px 16px">
       <div style="max-width:640px;margin:auto;background:#111;border-top:5px solid #ffb600;padding:36px">
-        <a href="https://cjfs.co.nz" style="display:flex;align-items:center;gap:16px;color:#f8f5ec;text-decoration:none;border-bottom:1px solid #34322d;padding-bottom:18px;margin-bottom:22px">
+        <div style="display:flex;align-items:center;gap:16px;color:#f8f5ec;border-bottom:1px solid #34322d;padding-bottom:18px;margin-bottom:22px">
           <img src="${cjfsLogoUrl}" alt="CJFS" width="58" style="display:block;width:58px;height:auto">
           <span style="display:block">
             <strong style="display:block;letter-spacing:1.6px;font-size:11px">CJFS PROUDLY PRESENTS</strong>
             <small style="display:block;margin-top:7px;color:#e6b333;letter-spacing:1.2px;font-size:8px;font-weight:700">TAILORED SOLUTIONS | TRUSTED GUIDANCE</small>
             <small style="display:block;margin-top:7px;color:#8d8b84;letter-spacing:1.2px;font-size:8px">A MOKSHA BASE EVENT</small>
           </span>
-        </a>
+        </div>
         <img src="${hopeTitleUrl}" alt="HOPE" width="360" style="display:block;width:100%;max-width:360px;height:auto;margin:18px 0 12px">
         <p style="margin:0 0 5px;color:#ff6b2b;letter-spacing:2px;font-size:12px;font-weight:700">${EVENT_NAME.toUpperCase()}</p>
         <p style="margin:0 0 28px;color:#9fe981">${EVENT_SUBTITLE}</p>
