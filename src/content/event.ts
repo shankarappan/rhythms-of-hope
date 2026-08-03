@@ -36,9 +36,11 @@ export const event = {
 
 export const titleSponsor = {
   name: 'CJFS',
+  taglineLead: 'Tailored Solutions',
+  taglineEmphasis: 'Trusted Guidance',
   presenterLine: 'CJFS proudly presents',
   organiserLine: 'A Moksha Base event',
-  heroImage: '/cjfs-title-sponsor-v2.png',
+  heroImage: '/cjfs-title-sponsor-transparent.png',
 }
 
 export const donationPrograms: DonationProgram[] = [
