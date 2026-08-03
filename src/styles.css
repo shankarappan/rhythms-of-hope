@@ -366,11 +366,13 @@ h1, h2, h3, p { margin-top: 0; }
   .brand img { width: 35px; height: 35px; }
   .header-mobile-actions { gap: 7px; }
   .header-ticket-mobile, .header-donate-mobile { min-height: 36px; padding: 0 10px; font-size: 9px; letter-spacing: .06em; }
-  .hero { min-height: 980px; padding-top: 132px; align-items: start; }
+  .hero { min-height: 980px; padding-top: 92px; align-items: start; }
+  .hero__content { padding-top: 0; }
   .hero__sponsor { width: min(224px, 66vw); margin: 0 0 14px -8px; }
   .hero__sponsor-tagline { font-size: 6.5px; letter-spacing: .13em; }
   .hero__sponsor-presents { margin: 9px 0 0 8px; font-size: 7px; letter-spacing: .28em; }
-  .hero__presenter, .hero__kicker { margin-left: -8px; }
+  .hero__presenter { margin-left: 0; }
+  .hero__kicker { margin-left: -8px; }
   .hero__poster {
     inset: 29% -22% 0 0;
     background-image:
