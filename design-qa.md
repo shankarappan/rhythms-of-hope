@@ -51,6 +51,32 @@ final result: passed
 
 ---
 
+# Design QA — ticket-flow sponsor showcase
+
+- Placement reference: `/var/folders/n2/d96307fd2c91hg5g4xt_f24m0000gn/T/codex-clipboard-8202a7b9-3c1d-485f-9f9c-6e463fe0b637.png`
+- Sponsor hierarchy reference: `/var/folders/n2/d96307fd2c91hg5g4xt_f24m0000gn/T/codex-clipboard-66184486-6f8e-4ba8-99b1-fea212455859.png`
+- Checked viewports: 1440 × 900 and 390 × 844 CSS pixels
+
+## Findings
+
+No actionable P0, P1, or P2 findings remain.
+
+- Desktop placement: the sponsor showcase occupies the requested left-column space below the date and venue lines, balancing the checkout card without competing with it.
+- Mobile order: checkout is followed immediately by sponsors, then the event date and venue details.
+- Hierarchy: Team Jack — Lugtons receives the featured Silver position; Sehion Tours & Travels, FG Group and Flavours of India share the Bronze group; Pappadomz is separately labelled as Catering sponsor.
+- Brand fidelity: the supplied logo artwork is used directly and fitted without stretching or redrawing.
+- Responsiveness: supporting sponsors move from a compact desktop row to a readable mobile stack, with the three Bronze sponsors retained as a cohesive group.
+- Accessibility: the showcase is a labelled region and every logo has descriptive alternative text.
+- Browser console: no warnings or errors were present during final responsive checks.
+
+## Comparison decision
+
+The implementation follows the poster’s visual hierarchy while translating it into a scalable website component. It places sponsor recognition at the highest-intent point in the journey—alongside ticket purchase—while preserving a calm, premium black-and-gold event aesthetic.
+
+final result: passed
+
+---
+
 # Design QA — transparent CJFS hero treatment
 
 - Issue reference: `/var/folders/n2/d96307fd2c91hg5g4xt_f24m0000gn/T/codex-clipboard-f4ddf38e-7032-493f-b2af-c4a836d690a0.png`

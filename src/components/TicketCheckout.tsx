@@ -11,6 +11,7 @@ import {
   TICKET_PRICE_CENTS,
 } from "../../lib/event-config";
 import { SectionHeading } from "./SectionHeading";
+import { SponsorShowcase } from "./SponsorShowcase";
 
 type Availability = {
   salesOpen: boolean;
@@ -64,10 +65,6 @@ export function TicketCheckout() {
           title="Join us for an evening of hope."
           body="Book without creating an account. Your name and email are collected securely at Stripe Checkout, then your numbered QR tickets and receipt are sent by Moksha Base."
         />
-        <div className="ticket-event-line">
-          <p><strong>{EVENT_DATE}</strong><span>Doors {EVENT_DOORS_TIME} · Show {EVENT_SHOW_TIME}</span></p>
-          <p><strong>{EVENT_VENUE}</strong><span>{EVENT_ADDRESS}</span></p>
-        </div>
       </div>
       <form className="ticket-checkout" onSubmit={submit} data-reveal>
         <div className="ticket-checkout__heading">
@@ -109,6 +106,11 @@ export function TicketCheckout() {
         </button>
         <p className="ticket-checkout__note">Maximum 10 tickets per order. Your reservation is held for 30 minutes while you complete checkout.</p>
       </form>
+      <SponsorShowcase />
+      <div className="ticket-event-line" data-reveal>
+        <p><strong>{EVENT_DATE}</strong><span>Doors {EVENT_DOORS_TIME} · Show {EVENT_SHOW_TIME}</span></p>
+        <p><strong>{EVENT_VENUE}</strong><span>{EVENT_ADDRESS}</span></p>
+      </div>
     </section>
   );
 }
