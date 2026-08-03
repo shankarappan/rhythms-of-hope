@@ -51,6 +51,34 @@ final result: passed
 
 ---
 
+# Design QA — CJFS hero alignment and tagline cache fix
+
+- Alignment reference: `/var/folders/n2/d96307fd2c91hg5g4xt_f24m0000gn/T/codex-clipboard-c1297efa-c4bd-49a8-9143-428e31997d03.png`
+- Desktop implementation: `/private/tmp/cjfs-align-desktop.png`
+- Mobile implementation: `/private/tmp/cjfs-align-mobile.png`
+- Combined comparison: `/private/tmp/cjfs-align-comparison.png`
+- Checked viewports: 1440 × 900 and 390 × 844 CSS pixels
+
+## Findings
+
+No actionable P0, P1, or P2 findings remain.
+
+- Alignment: the visible left edges of the sponsor artwork, sponsor caption, organiser line, HOPE title and “Rhythms of Hope” now form one consistent visual axis.
+- Sponsor scale: the CJFS artwork is slightly smaller, preserving clear hierarchy beneath the main navigation.
+- Tagline: `TAILORED SOLUTIONS | TRUSTED GUIDANCE` is visible beneath the sponsor artwork at both checked breakpoints.
+- Cache reliability: the supplied sponsor artwork is served from a new versioned filename, preventing browsers from reusing the earlier image that omitted the tagline.
+- Interaction: no CJFS website link is present.
+- Responsive layout: the mobile title group remains in flow with no overlap or horizontal scrollbar.
+- Browser console: no warnings or errors were present during the final checks.
+
+## Comparison decision
+
+The final desktop composition resolves the offset marked in the supplied screenshot while keeping the sponsor prominent but secondary to the HOPE show title.
+
+final result: passed
+
+---
+
 # Design QA — CJFS sponsor placement revision
 
 - Sponsor-art reference: `/var/folders/n2/d96307fd2c91hg5g4xt_f24m0000gn/T/codex-clipboard-929eafe5-5b0f-4c41-9052-cd07589b60fd.png`
