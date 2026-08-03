@@ -1,5 +1,6 @@
 import { PDFDocument, StandardFonts, rgb } from "pdf-lib";
 import QRCode from "qrcode";
+import cjfsLogoDataUrl from "./assets/cjfs-logo.png?inline";
 import hopeTitleDataUrl from "./assets/hope-title.png?inline";
 import {
   EVENT_ADDRESS,
@@ -43,12 +44,17 @@ export async function createTicketPdf(order: TicketOrder, origin: string) {
   const pdf = await PDFDocument.create();
   const regular = await pdf.embedFont(StandardFonts.Helvetica);
   const bold = await pdf.embedFont(StandardFonts.HelveticaBold);
+  const cjfsLogo = await pdf.embedPng(cjfsLogoDataUrl);
   const hopeTitle = await pdf.embedPng(hopeTitleDataUrl);
   for (const ticket of order.tickets) {
     const page = pdf.addPage([595, 842]);
     page.drawRectangle({ x: 0, y: 0, width: 595, height: 842, color: rgb(0.02, 0.02, 0.02) });
-    page.drawRectangle({ x: 0, y: 772, width: 595, height: 70, color: rgb(0.98, 0.3, 0.08) });
-    page.drawText("MOKSHA BASE PRESENTS", { x: 44, y: 802, size: 10, font: bold, color: rgb(1, 1, 1) });
+    page.drawRectangle({ x: 0, y: 772, width: 595, height: 70, color: rgb(0.045, 0.045, 0.04) });
+    page.drawRectangle({ x: 0, y: 772, width: 595, height: 2, color: rgb(1, 0.71, 0) });
+    page.drawImage(cjfsLogo, { x: 44, y: 780, width: 41, height: 54 });
+    page.drawText("CJFS PROUDLY PRESENTS", { x: 101, y: 811, size: 10, font: bold, color: rgb(1, 1, 1) });
+    page.drawText("TAILORED SOLUTIONS | TRUSTED GUIDANCE", { x: 101, y: 794, size: 6.8, font: bold, color: rgb(0.93, 0.68, 0.17) });
+    page.drawText("A MOKSHA BASE EVENT", { x: 437, y: 802, size: 7.5, font: bold, color: rgb(0.72, 0.72, 0.69) });
     page.drawImage(hopeTitle, { x: 44, y: 648, width: 360, height: 108.3 });
     page.drawText(EVENT_NAME.toUpperCase(), { x: 44, y: 620, size: 11, font: bold, color: rgb(1, 0.42, 0.08) });
     drawMaoriSubtitle(page, regular, 594);
