@@ -70,22 +70,10 @@ function App() {
           <div className="hero__aurora" aria-hidden="true" />
           <div className="hero__poster" aria-hidden="true" />
           <div className="hero__content">
-            <a
-              className="hero__sponsor"
-              href={titleSponsor.website}
-              target="_blank"
-              rel="noreferrer"
-              aria-label="Visit CJFS, title sponsor of Rhythms of Hope"
-            >
-              <span className="hero__sponsor-art">
-                <img src={titleSponsor.heroImage} alt="" width="656" height="494" fetchPriority="high" />
-              </span>
-              <span className="hero__sponsor-copy">
-                <small>Title sponsor</small>
-                <strong>{titleSponsor.presenterLine}</strong>
-                <span>{titleSponsor.tagline}</span>
-              </span>
-            </a>
+            <div className="hero__sponsor" aria-label="CJFS, title sponsor — proudly presents Rhythms of Hope">
+              <img src={titleSponsor.heroImage} alt="CJFS — Tailored Solutions, Trusted Guidance" width="564" height="327" fetchPriority="high" />
+              <span>{titleSponsor.presenterLine}</span>
+            </div>
             <p className="hero__presenter">{titleSponsor.organiserLine}</p>
             <img className="hero__title" src={assetUrl('hope-title.png')} alt="Hope" width="871" height="262" fetchPriority="high" />
             <p className="hero__kicker">Rhythms of Hope</p>

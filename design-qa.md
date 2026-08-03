@@ -51,6 +51,38 @@ final result: passed
 
 ---
 
+# Design QA — CJFS sponsor placement revision
+
+- Sponsor-art reference: `/var/folders/n2/d96307fd2c91hg5g4xt_f24m0000gn/T/codex-clipboard-929eafe5-5b0f-4c41-9052-cd07589b60fd.png`
+- Placement reference: `/var/folders/n2/d96307fd2c91hg5g4xt_f24m0000gn/T/codex-clipboard-921bf236-4355-4b3c-b673-41bd508ad99b.png`
+- Desktop implementation: `/private/tmp/cjfs-reposition-desktop.png`
+- Mobile implementation: `/private/tmp/cjfs-reposition-mobile.png`
+- Combined comparison: `/private/tmp/cjfs-reposition-comparison.png`
+- Checked viewports: 1440 × 900 and 390 × 844 CSS pixels
+
+## Findings
+
+No actionable P0, P1, or P2 findings remain.
+
+- Placement: the combined CJFS logo-and-portrait artwork now sits directly above the HOPE show-title group, aligned to the hero’s left content edge.
+- Spacing: clear breathing room remains between the navigation divider and the sponsor artwork; the complete title group is lowered as requested.
+- Styling: the former bordered sponsor card, split text layout, hover state, and external website link are removed.
+- Blending: the supplied artwork is used directly with side-edge masking and screen blending so its black field settles into the hero background.
+- Hierarchy: CJFS remains identifiable without overtaking the larger HOPE title.
+- Required wording: the subtle `CJFS proudly presents` caption and `A Moksha Base event` organiser line remain visible.
+- Responsive layout: the artwork scales down in flow on mobile with no overlap against the header actions, HOPE title, or event copy.
+- Accessibility: the sponsor is no longer interactive; its image has descriptive alternative text.
+- Regression check: ticket PDF and ticket-email sponsor branding are unchanged.
+- Browser console: no warnings or errors were present during the final responsive checks.
+
+## Comparison decision
+
+The final composition follows the supplied placement markup: sponsor recognition is integrated into the same left-hand title stack, while the quiet black-to-black blend and reduced scale preserve HOPE as the dominant visual.
+
+final result: passed
+
+---
+
 # Design QA — CJFS title sponsor treatment
 
 - Source visual truth: `/var/folders/n2/d96307fd2c91hg5g4xt_f24m0000gn/T/codex-clipboard-c69cde86-57a1-4d56-99d2-8ae530d54ab3.png`
@@ -78,5 +110,11 @@ No actionable P0, P1, or P2 findings remain.
 ## Comparison decision
 
 The implementation carries forward the reference poster’s core sponsorship pattern—gold CJFS identity, portrait, tagline and “proudly presents”—while reducing its scale and moving it into a contained hero signature. This preserves sponsor recognition while keeping HOPE as the dominant visual and Siva’s event story as the emotional centre.
+
+final result: passed
+
+## Current implementation note
+
+The placement-revision section above supersedes the earlier sponsor-card treatment. The current website and ticket email contain no hyperlink to the CJFS website.
 
 final result: passed
