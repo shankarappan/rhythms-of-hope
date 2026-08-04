@@ -54,7 +54,7 @@ h1, h2, h3, p { margin-top: 0; }
 .hero__sponsor-tagline { width: 100%; margin: -5px 0 0; color: #f4f1ec; font: 700 8px/1 var(--display); letter-spacing: .2em; text-align: center; text-transform: uppercase; white-space: nowrap; }
 .hero__sponsor-tagline span { color: var(--gold); margin: 0 .35em; }
 .hero__sponsor-tagline strong { color: var(--gold); font-weight: 700; }
-.hero__sponsor-presents { margin: 11px 0 0 16px; color: #b9b5ad; font: 600 8px/1 var(--display); letter-spacing: .38em; text-transform: uppercase; }
+.hero__sponsor-presents { margin: 11px 0 0; color: #b9b5ad; font: 600 8px/1 var(--display); letter-spacing: .38em; text-align: left; text-transform: uppercase; }
 .hero__presenter { margin: 0 0 18px -12px; font: 600 11px/1 var(--display); text-transform: uppercase; letter-spacing: .42em; color: #c3c0ba; }
 .hero__title { width: min(590px, 68vw); height: auto; display: block; margin-left: -12px; filter: drop-shadow(0 16px 40px rgba(0,0,0,.48)); }
 .hero__kicker { margin: 12px 0 0 -12px; font: 700 clamp(17px, 2vw, 25px)/1 var(--display); letter-spacing: .32em; text-transform: uppercase; background: linear-gradient(90deg, var(--ember), var(--gold), var(--green)); -webkit-background-clip: text; background-clip: text; color: transparent; }
@@ -216,13 +216,15 @@ h1, h2, h3, p { margin-top: 0; }
 .sponsor-logo img { width: 100%; height: 78px; display: block; object-fit: contain; }
 .sponsor-logo--featured { min-height: 118px; padding: 20px 28px; }
 .sponsor-logo--featured img { height: 76px; }
-.ticket-sponsors__supporting { margin-top: 18px; display: grid; grid-template-columns: minmax(0, 2fr) minmax(130px, .72fr); gap: 14px; align-items: stretch; }
+.ticket-sponsors__supporting { margin-top: 18px; display: grid; gap: 18px; }
 .sponsor-tier__grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
-.sponsor-tier__grid .sponsor-logo, .sponsor-tier--catering .sponsor-logo { min-height: 122px; }
+.sponsor-tier__grid .sponsor-logo, .sponsor-tier--partner .sponsor-logo { min-height: 122px; }
 .sponsor-tier__grid .sponsor-logo img { height: 78px; }
-.sponsor-tier--catering { display: flex; flex-direction: column; }
-.sponsor-tier--catering .sponsor-logo { flex: 1; }
+.ticket-sponsors__partners { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+.sponsor-tier--partner { display: flex; flex-direction: column; }
+.sponsor-tier--partner .sponsor-logo { flex: 1; }
 .sponsor-tier--catering .sponsor-logo img { height: 92px; }
+.sponsor-tier--production .sponsor-logo img { height: 98px; }
 
 .donate { position: relative; overflow: hidden; width: min(1300px, calc(100vw - 32px)); padding: clamp(70px, 8vw, 108px); background: linear-gradient(135deg, #0d1712 0%, #0a100d 58%, #171204 100%); border: 1px solid rgba(118,227,77,.22); }
 .donate__glow { position: absolute; width: 620px; height: 620px; right: -180px; top: -280px; border-radius: 50%; background: radial-gradient(circle, rgba(118,227,77,.22), rgba(255,182,0,.08) 42%, transparent 70%); pointer-events: none; }
@@ -359,7 +361,7 @@ h1, h2, h3, p { margin-top: 0; }
   .hero__poster { left: 28%; opacity: .7; }
   .hero__content { padding-top: 40px; }
   .hero__sponsor { width: min(258px, 56vw); margin-left: -12px; }
-  .hero__sponsor-presents { margin-left: 12px; }
+  .hero__sponsor-presents { margin-left: 0; }
   .hero__intro { max-width: 480px; }
   .story { grid-template-columns: 1fr; }
   .story__quote { position: relative; top: auto; margin-top: 0; }
@@ -388,7 +390,7 @@ h1, h2, h3, p { margin-top: 0; }
   .hero__content { padding-top: 0; }
   .hero__sponsor { width: min(224px, 66vw); margin: 0 0 14px -8px; }
   .hero__sponsor-tagline { font-size: 6.5px; letter-spacing: .13em; }
-  .hero__sponsor-presents { margin: 9px 0 0 8px; font-size: 7px; letter-spacing: .28em; }
+  .hero__sponsor-presents { margin: 9px 0 0; font-size: 7px; letter-spacing: .28em; }
   .hero__presenter { margin-left: 0; }
   .hero__kicker { margin-left: -8px; }
   .hero__poster {
@@ -440,12 +442,13 @@ h1, h2, h3, p { margin-top: 0; }
   .ticket-checkout { padding: 26px 22px; }
   .ticket-sponsors { padding: 24px 18px; }
   .ticket-sponsors__heading { margin-bottom: 20px; }
-  .ticket-sponsors__supporting { grid-template-columns: 1fr; gap: 18px; }
+  .ticket-sponsors__supporting { gap: 18px; }
   .sponsor-tier__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .sponsor-tier__grid .sponsor-logo:last-child { grid-column: 1 / -1; }
+  .ticket-sponsors__partners { grid-template-columns: 1fr; gap: 18px; }
   .sponsor-logo--featured { min-height: 100px; padding: 16px 20px; }
   .sponsor-logo--featured img { height: 62px; }
-  .sponsor-tier--catering .sponsor-logo { min-height: 128px; }
+  .sponsor-tier--partner .sponsor-logo { min-height: 128px; }
   .donate { width: calc(100vw - 16px); padding: 72px 26px; gap: 48px; }
   .donate h2 { font-size: 42px; }
   .donation-chooser { margin-top: 42px; }

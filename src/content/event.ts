@@ -38,7 +38,7 @@ export const titleSponsor = {
   name: 'CJFS',
   taglineLead: 'Tailored Solutions',
   taglineEmphasis: 'Trusted Guidance',
-  presenterLine: 'CJFS proudly presents',
+  presenterLine: 'Proudly presents',
   organiserLine: 'A Moksha Base event',
   heroImage: '/cjfs-title-sponsor-transparent.png',
 }

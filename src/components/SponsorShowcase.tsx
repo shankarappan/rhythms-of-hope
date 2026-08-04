@@ -12,6 +12,7 @@ export function SponsorShowcase() {
   const silverSponsor = sponsors.find(sponsor => sponsor.tier === 'silver')
   const bronzeSponsors = sponsors.filter(sponsor => sponsor.tier === 'bronze')
   const cateringSponsor = sponsors.find(sponsor => sponsor.tier === 'catering')
+  const productionPartner = sponsors.find(sponsor => sponsor.tier === 'production')
 
   return (
     <section className="ticket-sponsors" aria-labelledby="ticket-sponsors-title" data-reveal>
@@ -35,12 +36,21 @@ export function SponsorShowcase() {
           </div>
         </div>
 
-        {cateringSponsor && (
-          <div className="sponsor-tier sponsor-tier--catering">
-            <p>Catering sponsor</p>
-            <SponsorLogo sponsor={cateringSponsor} />
-          </div>
-        )}
+        <div className="ticket-sponsors__partners">
+          {cateringSponsor && (
+            <div className="sponsor-tier sponsor-tier--partner sponsor-tier--catering">
+              <p>Catering sponsor</p>
+              <SponsorLogo sponsor={cateringSponsor} />
+            </div>
+          )}
+
+          {productionPartner && (
+            <div className="sponsor-tier sponsor-tier--partner sponsor-tier--production">
+              <p>Production partner</p>
+              <SponsorLogo sponsor={productionPartner} />
+            </div>
+          )}
+        </div>
       </div>
     </section>
   )

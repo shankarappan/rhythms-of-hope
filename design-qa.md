@@ -51,6 +51,45 @@ final result: passed
 
 ---
 
+# Design QA — sponsor refresh and donation reveal
+
+- Source visual truth: `/Users/shankar/Downloads/Sponsors/Bronze Sponsors/Great flavours of India.jpeg` (1536 × 1024 px) and `/Users/shankar/Documents/Logos 3rd Party/Shelz_3D Logo.png` (4608 × 4608 px)
+- Desktop implementation: `/private/tmp/hope-sponsors-desktop-focused.png` (1248 × 900 px browser capture at a 1440 × 900 CSS viewport)
+- Mobile implementation: `/private/tmp/hope-sponsors-mobile.png` (390 × 844 px at a 390 × 844 CSS viewport)
+- Combined comparison: `/private/tmp/hope-design-qa-comparison.jpg` (1800 × 1050 px)
+- Density normalization: source logos were proportionally fitted beside the browser capture for direct visual comparison; no aspect-ratio distortion was introduced.
+- State: ticket sponsor panel visible; donation programme selected for the interaction check.
+
+## Findings
+
+No actionable P0, P1, or P2 findings remain.
+
+- Fonts and typography: existing Manrope/DM Sans hierarchy is retained; `Proudly presents` is legible and left-aligned at both tested breakpoints.
+- Spacing and layout rhythm: Silver, Bronze, catering, and production roles remain clearly separated. Catering and production partners share an even two-column row on desktop and stack cleanly on mobile.
+- Colors and visual tokens: the new gold/black partner identities remain faithful to the event palette, while white-backed Bronze sponsor cards preserve the supplied artwork contrast.
+- Image quality and asset fidelity: both supplied logos are used directly, proportionally scaled, and remain sharp and readable. No logo was redrawn or approximated.
+- Copy and content: the story now identifies lymphoma as a type of cancer, and the title-sponsor caption reads `Proudly presents` without the duplicated CJFS name.
+- Interaction: choosing either donation programme on desktop scrolls the final secure action panel into the viewport. The mobile layout keeps its existing in-card donation action and does not invoke the desktop scroll routine.
+- Accessibility: sponsor images retain descriptive alternative text; donation selectors preserve button semantics, pressed state, and `aria-controls` relationships.
+- Browser console: no warnings or errors were present during the final checks.
+
+## Full-view comparison evidence
+
+The combined comparison shows the original Great Flavours of India and Shelz Media artwork beside the rendered desktop sponsor panel. Brand shapes, wording, color, and proportions remain intact; the implementation changes only scale and surrounding presentation.
+
+## Focused region evidence
+
+Focused desktop and mobile sponsor captures confirm that the Great Flavours of India address remains readable, Shelz Media is clearly labelled as Production partner, and the surrounding sponsor hierarchy does not crop or stretch either asset.
+
+## Comparison history
+
+- Initial implementation: no P0/P1/P2 visual mismatch was found in the first combined comparison.
+- Interaction verification: the desktop donation action panel landed between 345 px and 555 px within a 900 px viewport after selection; browser console checks returned no warnings or errors.
+
+final result: passed
+
+---
+
 # Design QA — ticket-flow sponsor showcase
 
 - Placement reference: `/var/folders/n2/d96307fd2c91hg5g4xt_f24m0000gn/T/codex-clipboard-8202a7b9-3c1d-485f-9f9c-6e463fe0b637.png`

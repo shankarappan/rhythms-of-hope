@@ -1,4 +1,4 @@
-export type SponsorTier = 'silver' | 'bronze' | 'catering'
+export type SponsorTier = 'silver' | 'bronze' | 'catering' | 'production'
 
 export type Sponsor = {
   name: string
@@ -27,15 +27,21 @@ export const sponsors: Sponsor[] = [
     tone: 'light',
   },
   {
-    name: 'Flavours of India',
+    name: 'Great Flavours of India — Horsham Downs, Hamilton',
     tier: 'bronze',
-    image: '/sponsor-flavours-india.jpg',
-    tone: 'dark',
+    image: '/sponsor-great-flavours-india.jpg',
+    tone: 'light',
   },
   {
     name: 'Pappadomz',
     tier: 'catering',
     image: '/sponsor-pappadomz.png',
+    tone: 'dark',
+  },
+  {
+    name: 'Shelz Media',
+    tier: 'production',
+    image: '/sponsor-shelz-media.webp',
     tone: 'dark',
   },
 ]

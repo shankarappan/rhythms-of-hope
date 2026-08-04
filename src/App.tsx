@@ -103,7 +103,7 @@ function App() {
         <section className="story section" id="story">
           <div className="story__copy" data-reveal>
             <SectionHeading eyebrow="The heart of the event" title="One journey. A wider circle of hope." />
-            <p className="story__lead">Earlier in 2026, Moksha Base band member, close friend and MC Sivakumar Sangameshwaran — Siva — was diagnosed with ALK-positive Anaplastic Large Cell Lymphoma.</p>
+            <p className="story__lead">Earlier in 2026, Moksha Base band member, close friend and MC Sivakumar Sangameshwaran — Siva — was diagnosed with ALK-positive Anaplastic Large Cell Lymphoma, a type of cancer.</p>
             <p>Through investigation, treatment and serious complications, Siva has continued to meet each chapter with humour, faith, courage and honesty. He is documenting that experience in a book — not only about cancer, but about the people, beliefs and communities that help carry us through difficult times.</p>
             <p>Rhythms of Hope grows from that deeply personal experience into something shared: a welcoming space for awareness, music, reflection and connection.</p>
           </div>

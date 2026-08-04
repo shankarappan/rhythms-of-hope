@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import type { DonationProgram } from '../content/event'
 
 type DonationSelection = DonationProgram['id'] | 'both' | null
@@ -11,7 +11,21 @@ const ExternalArrow = () => <span aria-hidden="true">↗</span>
 
 export function DonationChooser({ programs }: DonationChooserProps) {
   const [selection, setSelection] = useState<DonationSelection>(null)
+  const checkoutRef = useRef<HTMLDivElement>(null)
   const selectedProgram = programs.find(program => program.id === selection)
+
+  const selectDonation = (nextSelection: Exclude<DonationSelection, null>) => {
+    setSelection(nextSelection)
+
+    if (!window.matchMedia('(min-width: 941px)').matches) return
+
+    window.requestAnimationFrame(() => {
+      checkoutRef.current?.scrollIntoView({
+        behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth',
+        block: 'center',
+      })
+    })
+  }
 
   return (
     <section className="donate section" id="donate">
@@ -36,7 +50,8 @@ export function DonationChooser({ programs }: DonationChooserProps) {
                   className={`donation-program donation-program--${program.accent}${isSelected ? ' is-selected' : ''}`}
                   type="button"
                   aria-pressed={isSelected}
-                  onClick={() => setSelection(program.id)}
+                  aria-controls="donation-actions"
+                  onClick={() => selectDonation(program.id)}
                 >
                   <span className="donation-program__top">
                     <span>{program.number}</span>
@@ -72,7 +87,8 @@ export function DonationChooser({ programs }: DonationChooserProps) {
           className={`donation-both${selection === 'both' ? ' is-selected' : ''}`}
           type="button"
           aria-pressed={selection === 'both'}
-          onClick={() => setSelection('both')}
+          aria-controls="donation-actions"
+          onClick={() => selectDonation('both')}
         >
           <span>
             <small>Want to share your support?</small>
@@ -81,7 +97,12 @@ export function DonationChooser({ programs }: DonationChooserProps) {
           <span aria-hidden="true">{selection === 'both' ? '✓' : '→'}</span>
         </button>
 
-        <div className={`donation-checkout${selection ? ' has-selection' : ''}`} aria-live="polite">
+        <div
+          className={`donation-checkout${selection ? ' has-selection' : ''}`}
+          id="donation-actions"
+          ref={checkoutRef}
+          aria-live="polite"
+        >
           {!selection && (
             <div className="donation-checkout__empty">
               <span aria-hidden="true">↑</span>
