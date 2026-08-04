@@ -265,3 +265,42 @@ No actionable P0, P1, or P2 findings remain.
 The corrected mobile composition removes the unnecessary pause between navigation and sponsorship, while creating a cleaner shared left axis for the sponsor identity and organiser attribution.
 
 final result: passed
+
+---
+
+# Design QA — sponsor attribution and contact actions
+
+- Source visual truth: `/var/folders/n2/d96307fd2c91hg5g4xt_f24m0000gn/T/codex-clipboard-aec81438-03b1-4753-a86f-0e1afb75c67a.png` (778 × 704 px)
+- Desktop implementation: `/private/tmp/hope-attribution-desktop.png` (1248 × 900 px browser capture at a 1440 × 900 CSS viewport)
+- Mobile implementation: `/private/tmp/hope-attribution-mobile.png` (390 × 844 px at a 390 × 844 CSS viewport)
+- Combined comparison: `/private/tmp/hope-attribution-comparison.jpg` (2200 × 900 px)
+- State: top-of-page title sponsor treatment; mobile community partnership section; footer contact actions.
+- Density normalization: source and implementation were proportionally fitted into one comparison canvas without changing aspect ratio.
+
+## Findings
+
+No actionable P0, P1, or P2 findings remain.
+
+- Fonts and typography: the established uppercase sponsor typography and tracking are preserved. `Proudly presents` and `A Moksha Base event` now begin on the same measured left axis.
+- Spacing and layout rhythm: the two attribution lines remain distinct, retain the reference’s vertical hierarchy, and have a measured 0 px left-edge difference on both desktop and mobile.
+- Colors and visual tokens: the black, gold, white, and muted-grey sponsor treatment remains unchanged.
+- Image quality and asset fidelity: the supplied CJFS title-sponsor artwork remains the original asset with its established crop and scale.
+- Copy and content: the provisional partnership note is removed; the CTA and footer contact details contain the requested wording and destinations.
+- Interaction: `Start a conversation` points to `https://www.facebook.com/mokshabasenz`, opens in a new tab, and uses `rel="noreferrer"`. The phone number is exposed as `tel:+642102347945`.
+- Responsive behavior: the sponsor attribution remains aligned and in normal document flow at 390 × 844 without overlap.
+- Browser console: no warnings or errors were present during the final checks.
+
+## Full-view comparison evidence
+
+The combined reference and desktop capture show the same sponsor-image hierarchy followed by two separate attribution lines. The implementation corrects the requested left-axis inconsistency without changing the surrounding hero composition.
+
+## Focused region evidence
+
+The sponsor lines were measured directly in the browser: both resolved to the same left coordinate on desktop and mobile. The community partnership and footer controls were separately inspected for visible spacing and destination attributes.
+
+## Comparison history
+
+- Initial interpretation placed both phrases horizontally; review against the attached source showed that the intended relationship was two stacked lines sharing one left axis.
+- The attribution was corrected to a stacked layout; post-fix browser measurements show a 0 px alignment delta at both tested breakpoints.
+
+final result: passed

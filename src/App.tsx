@@ -75,9 +75,11 @@ function App() {
               <p className="hero__sponsor-tagline">
                 {titleSponsor.taglineLead} <span aria-hidden="true">|</span> <strong>{titleSponsor.taglineEmphasis}</strong>
               </p>
-              <span className="hero__sponsor-presents">{titleSponsor.presenterLine}</span>
             </div>
-            <p className="hero__presenter">{titleSponsor.organiserLine}</p>
+            <p className="hero__attribution">
+              <span className="hero__sponsor-presents">{titleSponsor.presenterLine}</span>
+              <span className="hero__presenter">{titleSponsor.organiserLine}</span>
+            </p>
             <img className="hero__title" src={assetUrl('hope-title.png')} alt="Hope" width="871" height="262" fetchPriority="high" />
             <p className="hero__kicker">Rhythms of Hope</p>
             <h1>{event.maoriName}</h1>
@@ -185,9 +187,8 @@ function App() {
             <p className="eyebrow">Community partnership</p>
             <h2>Help shape a meaningful, credible event.</h2>
             <p>Moksha Base welcomes conversations with organisations supporting cancer awareness, education, patient wellbeing, survivorship and community engagement.</p>
-            <a className="button button--light" href={`mailto:${event.contactEmail}?subject=Rhythms%20of%20Hope%20collaboration`}>Start a conversation <span aria-hidden="true">↗</span></a>
+            <a className="button button--light" href="https://www.facebook.com/mokshabasenz" target="_blank" rel="noreferrer">Start a conversation <span aria-hidden="true">↗</span></a>
           </div>
-          <p className="collaborate__note">Partnership roles and programme contributors are still being confirmed.</p>
         </section>
       </main>
 
@@ -204,6 +205,7 @@ function App() {
           <p className="footer__label">Contact</p>
           <p>{event.contactName}<br /><span>{event.contactRole}</span></p>
           <a href={`mailto:${event.contactEmail}`}>{event.contactEmail}</a>
+          <a href={`tel:${event.contactPhoneDial}`}>{event.contactPhone}</a>
         </div>
         <div className="footer__bottom">
           <p>© 2026 Moksha Base</p>

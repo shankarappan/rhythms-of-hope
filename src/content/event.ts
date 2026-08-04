@@ -32,6 +32,8 @@ export const event = {
   contactName: 'Abhishek Raj',
   contactRole: 'Band Manager — Moksha Base',
   contactEmail: 'info@mokshabase.com',
+  contactPhone: '+64 210 234 7945',
+  contactPhoneDial: '+642102347945',
 }
 
 export const titleSponsor = {

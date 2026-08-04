@@ -54,8 +54,9 @@ h1, h2, h3, p { margin-top: 0; }
 .hero__sponsor-tagline { width: 100%; margin: -5px 0 0; color: #f4f1ec; font: 700 8px/1 var(--display); letter-spacing: .2em; text-align: center; text-transform: uppercase; white-space: nowrap; }
 .hero__sponsor-tagline span { color: var(--gold); margin: 0 .35em; }
 .hero__sponsor-tagline strong { color: var(--gold); font-weight: 700; }
-.hero__sponsor-presents { margin: 11px 0 0; color: #b9b5ad; font: 600 8px/1 var(--display); letter-spacing: .38em; text-align: left; text-transform: uppercase; }
-.hero__presenter { margin: 0 0 18px -12px; font: 600 11px/1 var(--display); text-transform: uppercase; letter-spacing: .42em; color: #c3c0ba; }
+.hero__attribution { margin: 11px 0 18px -12px; display: grid; justify-items: start; gap: 20px; color: #c3c0ba; text-transform: uppercase; }
+.hero__sponsor-presents { color: #b9b5ad; font: 600 8px/1 var(--display); letter-spacing: .38em; }
+.hero__presenter { font: 600 11px/1 var(--display); letter-spacing: .42em; }
 .hero__title { width: min(590px, 68vw); height: auto; display: block; margin-left: -12px; filter: drop-shadow(0 16px 40px rgba(0,0,0,.48)); }
 .hero__kicker { margin: 12px 0 0 -12px; font: 700 clamp(17px, 2vw, 25px)/1 var(--display); letter-spacing: .32em; text-transform: uppercase; background: linear-gradient(90deg, var(--ember), var(--gold), var(--green)); -webkit-background-clip: text; background-clip: text; color: transparent; }
 .hero h1 { margin: 26px 0 4px; font: 500 clamp(19px, 2.3vw, 31px)/1.25 var(--display); }
@@ -299,7 +300,6 @@ h1, h2, h3, p { margin-top: 0; }
 .collaborate .eyebrow { color: rgba(0,0,0,.68); }
 .collaborate p:not(.eyebrow) { max-width: 650px; font-size: 17px; line-height: 1.65; }
 .collaborate .button { margin-top: 24px; }
-.collaborate__note { position: absolute; z-index: 1; right: 38px; bottom: 30px; max-width: 250px !important; margin: 0; font-size: 10px !important; text-transform: uppercase; letter-spacing: .14em; text-align: right; opacity: .66; }
 
 .site-footer { width: var(--container); margin: 0 auto; padding: 90px 0 30px; display: grid; grid-template-columns: 1.7fr .7fr 1fr; gap: 70px; color: #aaa8a2; font-size: 14px; }
 .footer__brand img { width: 110px; height: 92px; object-fit: contain; object-position: left center; margin-bottom: 24px; }
@@ -361,7 +361,7 @@ h1, h2, h3, p { margin-top: 0; }
   .hero__poster { left: 28%; opacity: .7; }
   .hero__content { padding-top: 40px; }
   .hero__sponsor { width: min(258px, 56vw); margin-left: -12px; }
-  .hero__sponsor-presents { margin-left: 0; }
+  .hero__attribution { margin-left: 0; }
   .hero__intro { max-width: 480px; }
   .story { grid-template-columns: 1fr; }
   .story__quote { position: relative; top: auto; margin-top: 0; }
@@ -390,8 +390,9 @@ h1, h2, h3, p { margin-top: 0; }
   .hero__content { padding-top: 0; }
   .hero__sponsor { width: min(224px, 66vw); margin: 0 0 14px -8px; }
   .hero__sponsor-tagline { font-size: 6.5px; letter-spacing: .13em; }
-  .hero__sponsor-presents { margin: 9px 0 0; font-size: 7px; letter-spacing: .28em; }
-  .hero__presenter { margin-left: 0; }
+  .hero__attribution { margin: 9px 0 18px; gap: 18px; }
+  .hero__sponsor-presents { font-size: 7px; letter-spacing: .28em; }
+  .hero__presenter { font-size: 9px; letter-spacing: .34em; }
   .hero__kicker { margin-left: -8px; }
   .hero__poster {
     inset: 29% -22% 0 0;
@@ -466,8 +467,7 @@ h1, h2, h3, p { margin-top: 0; }
   .donation-checkout__action > p { text-align: left; }
   .donation-disclosure { gap: 10px; }
   .details-list div { grid-template-columns: 88px 1fr; }
-  .collaborate { width: calc(100vw - 16px); padding: 72px 26px 112px; }
-  .collaborate__note { left: 26px; right: auto; text-align: left; }
+  .collaborate { width: calc(100vw - 16px); padding: 72px 26px; }
   .site-footer { grid-template-columns: 1fr; gap: 42px; }
   .status-dashboard__heading { align-items: flex-start; flex-direction: column; }
   .status-grid { grid-template-columns: 1fr 1fr; }
