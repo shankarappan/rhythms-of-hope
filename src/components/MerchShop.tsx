@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import { MERCH_MAX_ITEMS, MERCH_PICKUP, MERCH_PRICE_CENTS, merchSizes, type MerchCartItem, type MerchColour, type MerchSize } from "../../lib/merch";
 
 const gallery = {
@@ -15,6 +15,7 @@ export function MerchShop() {
   const [cart, setCart] = useState<MerchCartItem[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const cartRef = useRef<HTMLElement>(null);
   const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
   const productImage = gallery[colour];
   const total = useMemo(() => totalItems * MERCH_PRICE_CENTS, [totalItems]);
@@ -25,6 +26,12 @@ export function MerchShop() {
       const index = current.findIndex(item => item.colour === colour && item.size === size);
       if (index < 0) return [...current, { colour, size, quantity }];
       return current.map((item, itemIndex) => itemIndex === index ? { ...item, quantity: item.quantity + quantity } : item);
+    });
+    window.requestAnimationFrame(() => {
+      cartRef.current?.scrollIntoView({
+        behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth",
+        block: "start",
+      });
     });
   };
   const checkout = async () => {
@@ -51,7 +58,7 @@ export function MerchShop() {
         <div className="merch-add"><label>Quantity<select value={quantity} onChange={event => setQuantity(Number(event.target.value))}>{[1,2,3,4,5].map(value => <option key={value}>{value}</option>)}</select></label><button className="button button--primary" onClick={add}>Add to bag <span aria-hidden="true">+</span></button></div>
       </div>
     </div>
-    <aside className="merch-cart" aria-live="polite">
+    <aside ref={cartRef} className="merch-cart" aria-live="polite">
       <div><p className="eyebrow">Your order</p><h3>{totalItems ? `${totalItems} shirt${totalItems === 1 ? "" : "s"} in your bag` : "Your bag is ready"}</h3><p>Secure payment through Stripe. Name, email and phone are collected at checkout.</p></div>
       <div className="merch-cart__items">{cart.length ? cart.map((item, index) => <div key={`${item.colour}-${item.size}`}><span>{item.colour} · size {item.size}</span><strong>× {item.quantity}</strong><button aria-label="Remove item" onClick={() => setCart(current => current.filter((_, itemIndex) => itemIndex !== index))}>Remove</button></div>) : <p>Select your options above, then add a shirt to begin.</p>}</div>
       <div className="merch-cart__checkout"><p><span>Total</span><strong>NZ${(total / 100).toFixed(2)}</strong></p><button className="button button--ticket" disabled={!cart.length || loading} onClick={checkout}>{loading ? "Opening secure checkout…" : "Continue to secure checkout"} <span aria-hidden="true">↗</span></button><small>Pickup: {MERCH_PICKUP}</small>{error && <p className="form-error">{error}</p>}</div>
