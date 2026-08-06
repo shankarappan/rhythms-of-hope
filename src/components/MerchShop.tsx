@@ -28,10 +28,17 @@ export function MerchShop() {
       return current.map((item, itemIndex) => itemIndex === index ? { ...item, quantity: item.quantity + quantity } : item);
     });
     window.requestAnimationFrame(() => {
-      cartRef.current?.scrollIntoView({
-        behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth",
-        block: "end",
-      });
+      const cart = cartRef.current;
+      if (!cart) return;
+      const cartTop = cart.getBoundingClientRect().top;
+      const orderPreviewHeight = Math.min(180, Math.max(130, window.innerHeight * 0.22));
+      const previewTop = window.innerHeight - orderPreviewHeight - 16;
+      if (cartTop > previewTop) {
+        window.scrollBy({
+          top: cartTop - previewTop,
+          behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth",
+        });
+      }
     });
   };
   const checkout = async () => {
