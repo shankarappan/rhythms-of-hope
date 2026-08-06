@@ -51,6 +51,48 @@ final result: passed
 
 ---
 
+# Design QA — merchandise staging experience
+
+- Source visual truth: `/Users/shankar/Documents/1Capture_2026-08-05_07.24.22.png` through `/Users/shankar/Documents/1Capture_2026-08-05_07.26.36.png`
+- Implementation evidence: in-app Browser captures of `http://localhost:3000/#shop` at the default desktop viewport and 390 × 844 CSS px mobile viewport
+- State: black/white product galleries, empty bag, and Kids · White · XS × 3 selected bag
+- Density normalization: supplied product photography is displayed proportionally with `object-fit: contain`; no device frame or browser chrome was used for layout judgments.
+
+## Findings
+
+No actionable P0, P1, or P2 findings remain.
+
+- Fonts and typography: the existing Manrope/DM Sans hierarchy is preserved; product price, option legends, and checkout hierarchy remain legible at desktop and mobile sizes.
+- Spacing and layout rhythm: desktop uses a balanced gallery/configurator split; mobile stacks the story, imagery, controls, and bag in purchase order without overlap.
+- Colors and visual tokens: the shop retains the concert's black, ember, gold, teal, and green system while keeping the pale product-photo backgrounds intact.
+- Image quality and asset fidelity: all six supplied images are used directly and proportionally. Delivery JPEGs total about 640 KB versus roughly 7.3 MB for the source PNG copies, with no visible distortion.
+- Copy and content: price, adult/kids options, sizes XS–XL, secure checkout detail, and the full venue-pickup address are present.
+- Accessibility and interaction: colour, fit, size, quantity, add/remove, checkout-disabled, and populated-bag states use semantic controls. A selected Kids · White · XS × 3 bag correctly totals NZ$105.
+- Browser console: no warnings or errors were present in the shop or order-dashboard checks.
+
+## Full-view and focused evidence
+
+The desktop capture confirms the event-scale typographic introduction and gallery hierarchy. The focused mobile capture confirms that the product image stays uncropped and the facts row remains readable. The populated-bag DOM check confirms the selected variant, quantity, total, pickup copy, and enabled checkout state.
+
+## Primary interactions tested
+
+- Changed colour from Black to White.
+- Changed fit from Adult to Kids.
+- Selected size XS and quantity 3.
+- Added the variant and verified NZ$105 total.
+- Verified checkout remains disabled for an empty bag and enables when populated.
+- Logged into `/orders` with the staging password and verified empty-state counts and filters.
+- Checked desktop/mobile rendering and browser console output.
+
+## Comparison history
+
+1. Initial mobile check found no merchandise-component overflow, overlap, cropping, or unusable controls.
+2. The supplied PNG copies were compressed to delivery JPEGs and rechecked; visible product detail and aspect ratio remained intact.
+
+final result: passed
+
+---
+
 # Design QA — sponsor refresh and donation reveal
 
 - Source visual truth: `/Users/shankar/Downloads/Sponsors/Bronze Sponsors/Great flavours of India.jpeg` (1536 × 1024 px) and `/Users/shankar/Documents/Logos 3rd Party/Shelz_3D Logo.png` (4608 × 4608 px)

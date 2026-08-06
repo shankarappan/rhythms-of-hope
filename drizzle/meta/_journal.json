@@ -15,6 +15,13 @@
       "when": 1785243100000,
       "tag": "0001_donation_acknowledgements",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "6",
+      "when": 1786008265511,
+      "tag": "0002_tense_network",
+      "breakpoints": true
     }
   ]
 }

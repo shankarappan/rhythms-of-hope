@@ -21,8 +21,8 @@ export default function TicketSuccessPage() {
   useEffect(() => {
     const sessionId = new URLSearchParams(window.location.search).get("session_id");
     if (!sessionId) {
-      setFailed(true);
-      return;
+      const timer = window.setTimeout(() => setFailed(true), 0);
+      return () => window.clearTimeout(timer);
     }
     let attempts = 0;
     const load = async () => {

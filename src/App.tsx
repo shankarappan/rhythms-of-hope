@@ -7,6 +7,7 @@ import { ExperienceCard } from './components/ExperienceCard'
 import { SectionHeading } from './components/SectionHeading'
 import { StatusPill } from './components/StatusPill'
 import { TicketCheckout } from './components/TicketCheckout'
+import { MerchShop } from './components/MerchShop'
 import { donationPrograms, event, experiences, titleSponsor, values } from './content/event'
 import './styles.css'
 
@@ -15,6 +16,7 @@ const navItems = [
   ['Experience', '#experience'],
   ['Purpose', '#purpose'],
   ['Tickets', '#tickets'],
+  ['Shop', '#shop'],
   ['Donate', '#donate'],
   ['Event info', '#details'],
 ]
@@ -165,6 +167,8 @@ function App() {
 
         <TicketCheckout />
 
+        <MerchShop />
+
         <DonationChooser programs={donationPrograms} />
 
         <section className="details section" id="details">
@@ -199,7 +203,7 @@ function App() {
         </div>
         <div>
           <p className="footer__label">Event</p>
-          <a href="#story">The story</a><a href="#experience">Experience</a><a href="#purpose">Purpose</a><a href="#tickets">Book tickets</a><a href="#details">Event info</a>
+          <a href="#story">The story</a><a href="#experience">Experience</a><a href="#purpose">Purpose</a><a href="#tickets">Book tickets</a><a href="#shop">Shop</a><a href="#details">Event info</a>
         </div>
         <div>
           <p className="footer__label">Contact</p>

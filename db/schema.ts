@@ -60,3 +60,28 @@ export const donationAcknowledgements = sqliteTable("donation_acknowledgements",
   emailStatus: text("email_status").notNull().default("pending"),
   createdAt: text("created_at").notNull(),
 });
+
+export const merchOrders = sqliteTable("merch_orders", {
+  id: text("id").primaryKey(),
+  stripeSessionId: text("stripe_session_id").notNull().unique(),
+  paymentIntentId: text("payment_intent_id"),
+  buyerName: text("buyer_name").notNull(),
+  buyerEmail: text("buyer_email").notNull(),
+  buyerPhone: text("buyer_phone").notNull().default(""),
+  amountTotal: integer("amount_total").notNull(),
+  currency: text("currency").notNull(),
+  status: text("status").notNull().default("new"),
+  emailStatus: text("email_status").notNull().default("pending"),
+  createdAt: text("created_at").notNull(),
+  updatedAt: text("updated_at").notNull(),
+});
+
+export const merchOrderItems = sqliteTable("merch_order_items", {
+  id: integer("id").primaryKey({ autoIncrement: true }),
+  orderId: text("order_id").notNull(),
+  audience: text("audience").notNull(),
+  colour: text("colour").notNull(),
+  size: text("size").notNull(),
+  quantity: integer("quantity").notNull(),
+  unitAmount: integer("unit_amount").notNull(),
+});
