@@ -38,6 +38,7 @@ The GitHub `production` environment requires these encrypted secrets:
 - `COMPLIMENTARY_CODE_HASH`
 - `RESEND_API_KEY`
 - `STATUS_PASSWORD`
+- `ORDERS_PASSWORD`
 - `SESSION_SIGNING_SECRET`
 
 Ticket sales stay closed while `TICKETING_ENABLED` is `false` in
