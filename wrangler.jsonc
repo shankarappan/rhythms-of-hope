@@ -10,7 +10,7 @@
   },
   "vars": {
     "TICKETING_ENABLED": "true",
-    "MERCH_ENABLED": "false"
+    "MERCH_ENABLED": "true"
   },
   "secrets": {
     "required": [

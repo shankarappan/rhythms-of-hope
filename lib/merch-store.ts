@@ -58,7 +58,7 @@ async function loadMerchOrderBySession(stripeSessionId: string): Promise<MerchOr
     amount_total, currency, status, email_status, created_at FROM merch_orders WHERE stripe_session_id = ?`)
     .bind(stripeSessionId).first<Record<string, string | number>>();
   if (!row) return null;
-  const items = await db.prepare(`SELECT audience, colour, size, quantity FROM merch_order_items
+  const items = await db.prepare(`SELECT colour, size, quantity FROM merch_order_items
     WHERE order_id = ? ORDER BY id`).bind(String(row.id)).all<MerchCartItem>();
   return {
     id: String(row.id), stripeSessionId: String(row.stripe_session_id), buyerName: String(row.buyer_name),
@@ -93,7 +93,7 @@ export async function fulfillMerchCheckout(session: CheckoutSession) {
         ),
       ...items.map(item => db.prepare(`INSERT INTO merch_order_items
         (order_id, audience, colour, size, quantity, unit_amount) VALUES (?, ?, ?, ?, ?, ?)`)
-        .bind(orderId, item.audience, item.colour, item.size, item.quantity, MERCH_PRICE_CENTS)),
+        .bind(orderId, "standard", item.colour, item.size, item.quantity, MERCH_PRICE_CENTS)),
     ]);
   } catch (error) {
     const recovered = await loadMerchOrderBySession(session.id);

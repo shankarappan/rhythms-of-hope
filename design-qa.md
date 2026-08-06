@@ -51,6 +51,34 @@ final result: passed
 
 ---
 
+# Design QA — merchandise gallery and checkout refinement
+
+- Source issue references: `/var/folders/n2/d96307fd2c91hg5g4xt_f24m0000gn/T/codex-clipboard-3fe700f3-9792-49a1-88f1-f2b69cb0db64.png` and `/var/folders/n2/d96307fd2c91hg5g4xt_f24m0000gn/T/codex-clipboard-2f398a26-0c94-4b73-a6fb-d231755e749a.png`
+- Implementation evidence: in-app Browser captures at the default desktop viewport and 390 × 844 CSS px mobile viewport
+- State: gallery thumbnails exercised, White · size L × 2 added, and Stripe Checkout opened without submitting payment
+
+## Findings
+
+No actionable P0, P1, or P2 findings remain.
+
+- Image quality and crop: every main gallery image now uses the same 4:3 product frame, `object-fit: cover`, and upper-body focal position. Four black images measured exactly 621.34 × 466 px (1.333 ratio) during the desktop check.
+- Layout rhythm: the oversized viewport-relative gallery row was removed. Thumbnails now follow immediately after the standard product frame without the empty field shown in the supplied screenshot.
+- Control alignment: quantity select and Add to bag button measured the same top, bottom, and 54 px height on desktop and mobile.
+- Variant clarity: the Adult/Kids fit control and labels are removed. Colour and XS–XL size are the only buyer-facing variants.
+- Checkout: a White, size L, quantity 2 cart redirected to Stripe Checkout and displayed NZ$70, the correct line-item description, and the venue-pickup address.
+- Browser console: no warnings or errors were present during the gallery, cart, mobile, and checkout checks.
+
+## Comparison history
+
+1. Earlier implementation used a viewport-relative image row with `object-fit: contain`, producing a large blank field beneath some source images.
+2. The gallery was changed to a fixed-ratio crop and rechecked across every black thumbnail and the white gallery.
+3. The quantity label margin causing a two-column baseline offset was removed; post-fix geometry matches exactly.
+4. The shop availability flag was enabled and the final redirect was confirmed on `checkout.stripe.com`; no payment was submitted.
+
+final result: passed
+
+---
+
 # Design QA — merchandise staging experience
 
 - Source visual truth: `/Users/shankar/Documents/1Capture_2026-08-05_07.24.22.png` through `/Users/shankar/Documents/1Capture_2026-08-05_07.26.36.png`

@@ -32,7 +32,7 @@ export default function OrdersPage() {
     <div className="order-filters"><button className={filter === "all" ? "is-active" : ""} onClick={() => setFilter("all")}>All <strong>{orders.length}</strong></button>{statuses.map(status => <button key={status} className={filter === status ? "is-active" : ""} onClick={() => setFilter(status)}>{status} <strong>{orders.filter(order => order.status === status).length}</strong></button>)}</div>
     <div className="order-list">{visible.length ? visible.map(order => <article className="order-card" key={order.id}>
       <div className="order-card__top"><div><span className={`order-status order-status--${order.status}`}>{order.status}</span><h2>{order.buyerName}</h2><p><a href={`mailto:${order.buyerEmail}`}>{order.buyerEmail}</a>{order.buyerPhone && <> · <a href={`tel:${order.buyerPhone}`}>{order.buyerPhone}</a></>}</p></div><div><strong>NZ${(order.amountTotal / 100).toFixed(2)}</strong><small>{new Date(order.createdAt).toLocaleString("en-NZ")}</small></div></div>
-      <ul>{order.items.map(item => <li key={`${item.audience}-${item.colour}-${item.size}`}><span>{merchItemName(item)}</span><strong>× {item.quantity}</strong></li>)}</ul>
+      <ul>{order.items.map(item => <li key={`${item.colour}-${item.size}`}><span>{merchItemName(item)}</span><strong>× {item.quantity}</strong></li>)}</ul>
       <footer><small>#{order.id}</small><label>Fulfilment status<select value={order.status} onChange={event => void update(order.id, event.target.value as MerchOrderStatus)}>{statuses.map(status => <option key={status}>{status}</option>)}</select></label></footer>
     </article>) : <p className="orders-empty">No orders match this filter.</p>}</div>
   </section></main>;
