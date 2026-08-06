@@ -51,6 +51,27 @@ final result: passed
 
 ---
 
+# Design QA — merchandise collection imagery
+
+- Source assets: `/Users/shankar/Documents/Black T Shirt.png` and `/Users/shankar/Documents/White T Shirt.png`
+- Checked states: Black and White product selections
+- Checked viewports: desktop and 390 × 844 CSS pixels
+
+## Findings
+
+No actionable product-image issues remain.
+
+- Each colour now uses its supplied collection collage as the definitive product image.
+- The source 3:2 composition is preserved with no cropping of adults, children, or the flat-lay shirt.
+- The obsolete individual-image thumbnail strip has been removed.
+- Selecting White swaps to the white collection image; selecting Black swaps to the black collection image.
+- The mobile image remains contained within the merchandise card and preserves the complete composition.
+- Browser console: no warnings or errors were present during the final checks.
+
+final result: passed
+
+---
+
 # Design QA — merchandise gallery and checkout refinement
 
 - Source issue references: `/var/folders/n2/d96307fd2c91hg5g4xt_f24m0000gn/T/codex-clipboard-3fe700f3-9792-49a1-88f1-f2b69cb0db64.png` and `/var/folders/n2/d96307fd2c91hg5g4xt_f24m0000gn/T/codex-clipboard-2f398a26-0c94-4b73-a6fb-d231755e749a.png`

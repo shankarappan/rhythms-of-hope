@@ -4,22 +4,20 @@ import { useMemo, useState } from "react";
 import { MERCH_MAX_ITEMS, MERCH_PICKUP, MERCH_PRICE_CENTS, merchSizes, type MerchCartItem, type MerchColour, type MerchSize } from "../../lib/merch";
 
 const gallery = {
-  black: ["/merch/black-flat.jpg", "/merch/black-adult-man.jpg", "/merch/black-adult-woman.jpg", "/merch/black-kids.jpg"],
-  white: ["/merch/white-adults.jpg", "/merch/white-kids.jpg"],
+  black: "/merch/black-collection.jpg",
+  white: "/merch/white-collection.jpg",
 };
 
 export function MerchShop() {
   const [colour, setColour] = useState<MerchColour>("black");
   const [size, setSize] = useState<MerchSize>("M");
   const [quantity, setQuantity] = useState(1);
-  const [photo, setPhoto] = useState(0);
   const [cart, setCart] = useState<MerchCartItem[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
-  const images = gallery[colour];
+  const productImage = gallery[colour];
   const total = useMemo(() => totalItems * MERCH_PRICE_CENTS, [totalItems]);
-  const chooseColour = (next: MerchColour) => { setColour(next); setPhoto(0); };
   const add = () => {
     setError("");
     if (totalItems + quantity > MERCH_MAX_ITEMS) return setError(`A maximum of ${MERCH_MAX_ITEMS} shirts can be purchased per order.`);
@@ -44,12 +42,11 @@ export function MerchShop() {
     </div>
     <div className="merch-builder" data-reveal>
       <div className={`merch-gallery merch-gallery--${colour}`}>
-        <img src={images[Math.min(photo, images.length - 1)]} alt={`${colour} HOPE T-shirt preview`} />
-        <div className="merch-thumbs">{images.map((image, index) => <button key={image} className={photo === index ? "is-active" : ""} onClick={() => setPhoto(index)} aria-label={`View product image ${index + 1}`}><img src={image} alt="" /></button>)}</div>
+        <img src={productImage} alt={`${colour} HOPE T-shirt collection for adults and children`} />
       </div>
       <div className="merch-config">
         <div className="merch-config__heading"><div><p className="eyebrow">HOPE collection</p><h3>Classic T-shirt</h3></div><strong>NZ$35</strong></div>
-        <fieldset><legend>Choose a colour</legend><div className="merch-options merch-options--colour"><button className={colour === "black" ? "is-active" : ""} onClick={() => chooseColour("black")}><i className="swatch swatch--black" />Black</button><button className={colour === "white" ? "is-active" : ""} onClick={() => chooseColour("white")}><i className="swatch swatch--white" />White</button></div></fieldset>
+        <fieldset><legend>Choose a colour</legend><div className="merch-options merch-options--colour"><button className={colour === "black" ? "is-active" : ""} onClick={() => setColour("black")}><i className="swatch swatch--black" />Black</button><button className={colour === "white" ? "is-active" : ""} onClick={() => setColour("white")}><i className="swatch swatch--white" />White</button></div></fieldset>
         <fieldset><legend>Choose a size</legend><div className="merch-sizes">{merchSizes.map(option => <button className={size === option ? "is-active" : ""} key={option} onClick={() => setSize(option)}>{option}</button>)}</div></fieldset>
         <div className="merch-add"><label>Quantity<select value={quantity} onChange={event => setQuantity(Number(event.target.value))}>{[1,2,3,4,5].map(value => <option key={value}>{value}</option>)}</select></label><button className="button button--primary" onClick={add}>Add to bag <span aria-hidden="true">+</span></button></div>
       </div>
