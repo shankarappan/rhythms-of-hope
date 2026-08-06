@@ -30,7 +30,7 @@ export function MerchShop() {
     window.requestAnimationFrame(() => {
       cartRef.current?.scrollIntoView({
         behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth",
-        block: "start",
+        block: "end",
       });
     });
   };
