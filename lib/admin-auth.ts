@@ -1,7 +1,6 @@
 import { getRuntimeEnv } from "@/db";
 import { bytesToBase64Url, constantTimeEqual } from "./encoding";
 
-const COOKIE_NAME = "mb_status_session";
 const SESSION_SECONDS = 12 * 60 * 60;
 
 async function sign(value: string, secret: string) {
@@ -21,13 +20,27 @@ export async function verifyPassword(candidate: string) {
   return Boolean(password && constantTimeEqual(candidate, password));
 }
 
+export async function verifyOrdersPassword(candidate: string) {
+  const password = getRuntimeEnv().ORDERS_PASSWORD;
+  return Boolean(password && constantTimeEqual(candidate, password));
+}
+
 export async function createSessionCookie() {
   const secret = getRuntimeEnv().SESSION_SIGNING_SECRET;
   if (!secret) throw new Error("Status session signing is not configured.");
   const expires = Math.floor(Date.now() / 1000) + SESSION_SECONDS;
   const payload = `status.${expires}`;
   const signature = await sign(payload, secret);
-  return `${COOKIE_NAME}=${payload}.${signature}; Path=/; Max-Age=${SESSION_SECONDS}; HttpOnly; Secure; SameSite=Strict`;
+  return `mb_status_session=${payload}.${signature}; Path=/; Max-Age=${SESSION_SECONDS}; HttpOnly; Secure; SameSite=Strict`;
+}
+
+
+export async function createOrdersSessionCookie() {
+  const secret = getRuntimeEnv().SESSION_SIGNING_SECRET;
+  if (!secret) throw new Error("Order session signing is not configured.");
+  const expires = Math.floor(Date.now() / 1000) + SESSION_SECONDS;
+  const payload = `orders.${expires}`;
+  return `mb_orders_session=${payload}.${await sign(payload, secret)}; Path=/; Max-Age=${SESSION_SECONDS}; HttpOnly; Secure; SameSite=Strict`;
 }
 
 export async function isAdminRequest(request: Request) {
@@ -37,8 +50,8 @@ export async function isAdminRequest(request: Request) {
   const value = cookie
     .split(";")
     .map(part => part.trim())
-    .find(part => part.startsWith(`${COOKIE_NAME}=`))
-    ?.slice(COOKIE_NAME.length + 1);
+    .find(part => part.startsWith("mb_status_session="))
+    ?.slice("mb_status_session=".length);
   if (!value) return false;
   const [scope, expiryText, signature] = value.split(".");
   const expiry = Number(expiryText);
@@ -47,6 +60,23 @@ export async function isAdminRequest(request: Request) {
   return constantTimeEqual(signature, expected);
 }
 
+
+export async function isOrdersAdminRequest(request: Request) {
+  const secret = getRuntimeEnv().SESSION_SIGNING_SECRET;
+  if (!secret) return false;
+  const value = (request.headers.get("cookie") ?? "").split(";").map(part => part.trim())
+    .find(part => part.startsWith("mb_orders_session="))?.slice("mb_orders_session=".length);
+  if (!value) return false;
+  const [scope, expiryText, signature] = value.split(".");
+  const expiry = Number(expiryText);
+  if (scope !== "orders" || !Number.isFinite(expiry) || expiry < Date.now() / 1000 || !signature) return false;
+  return constantTimeEqual(signature, await sign(`${scope}.${expiryText}`, secret));
+}
+
 export function clearSessionCookie() {
-  return `${COOKIE_NAME}=; Path=/; Max-Age=0; HttpOnly; Secure; SameSite=Strict`;
+  return `mb_status_session=; Path=/; Max-Age=0; HttpOnly; Secure; SameSite=Strict`;
+}
+
+export function clearOrdersSessionCookie() {
+  return `mb_orders_session=; Path=/; Max-Age=0; HttpOnly; Secure; SameSite=Strict`;
 }

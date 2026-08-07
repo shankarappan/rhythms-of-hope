@@ -11,6 +11,7 @@ import {
   type TicketKind,
 } from "./event-config";
 import { constantTimeEqual } from "./encoding";
+import { encodeMerchCart, MERCH_PICKUP, MERCH_PRICE_CENTS, merchItemName, type MerchCartItem } from "./merch";
 
 export type CheckoutSession = {
   id: string;
@@ -19,9 +20,55 @@ export type CheckoutSession = {
   amount_total?: number | null;
   currency?: string | null;
   payment_intent?: string | null;
-  customer_details?: { email?: string | null; name?: string | null } | null;
+  customer_details?: { email?: string | null; name?: string | null; phone?: string | null } | null;
+  payment_status?: string | null;
   metadata?: Record<string, string>;
 };
+
+export async function createMerchCheckout(args: { origin: string; items: MerchCartItem[] }) {
+  const runtime = getRuntimeEnv();
+  if (!runtime.STRIPE_SECRET_KEY) throw new Error("Stripe checkout is not configured.");
+  const body = new URLSearchParams();
+  body.set("mode", "payment");
+  body.set("customer_creation", "always");
+  body.set("name_collection[individual][enabled]", "true");
+  body.set("phone_number_collection[enabled]", "true");
+  body.set("metadata[order_type]", "merch");
+  body.set("metadata[merch_cart]", encodeMerchCart(args.items));
+  body.set("success_url", `${args.origin}/shop/success?session_id={CHECKOUT_SESSION_ID}`);
+  body.set("cancel_url", `${args.origin}/#shop`);
+  args.items.forEach((item, index) => {
+    body.set(`line_items[${index}][price_data][currency]`, "nzd");
+    body.set(`line_items[${index}][price_data][unit_amount]`, String(MERCH_PRICE_CENTS));
+    body.set(`line_items[${index}][price_data][product_data][name]`, merchItemName(item));
+    body.set(`line_items[${index}][price_data][product_data][description]`, `Venue pickup · ${MERCH_PICKUP}`);
+    body.set(`line_items[${index}][quantity]`, String(item.quantity));
+  });
+  const response = await fetch("https://api.stripe.com/v1/checkout/sessions", {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${runtime.STRIPE_SECRET_KEY}`,
+      "Content-Type": "application/x-www-form-urlencoded",
+      "Stripe-Version": "2024-06-20",
+      "Idempotency-Key": `roh-merch-${crypto.randomUUID()}`,
+    },
+    body,
+  });
+  const result = (await response.json()) as CheckoutSession & { error?: { message?: string } };
+  if (!response.ok || !result.url) throw new Error(result.error?.message ?? "Stripe could not start checkout.");
+  return result;
+}
+
+export async function retrieveStripeCheckout(sessionId: string) {
+  const key = getRuntimeEnv().STRIPE_SECRET_KEY;
+  if (!key) throw new Error("Stripe checkout is not configured.");
+  const response = await fetch(`https://api.stripe.com/v1/checkout/sessions/${encodeURIComponent(sessionId)}`, {
+    headers: { Authorization: `Bearer ${key}`, "Stripe-Version": "2024-06-20" },
+  });
+  const result = (await response.json()) as CheckoutSession & { error?: { message?: string } };
+  if (!response.ok) throw new Error(result.error?.message ?? "The checkout could not be confirmed.");
+  return result;
+}
 
 export async function createStripeCheckout(args: {
   origin: string;

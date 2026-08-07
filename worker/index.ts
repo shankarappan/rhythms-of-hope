@@ -9,8 +9,10 @@ export interface Env {
   COMPLIMENTARY_CODE_HASH?: string;
   RESEND_API_KEY?: string;
   STATUS_PASSWORD?: string;
+  ORDERS_PASSWORD?: string;
   SESSION_SIGNING_SECRET?: string;
   TICKETING_ENABLED?: string;
+  MERCH_ENABLED?: string;
 }
 
 export default {

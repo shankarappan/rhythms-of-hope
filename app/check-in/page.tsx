@@ -21,8 +21,11 @@ export default function CheckInPage() {
 
   useEffect(() => {
     const token = new URLSearchParams(window.location.search).get("token");
-    if (token) setTicket(token);
-    fetch("/api/status", { cache: "no-store" }).then(response => setAuthenticated(response.ok));
+    const timer = window.setTimeout(() => {
+      if (token) setTicket(token);
+      fetch("/api/status", { cache: "no-store" }).then(response => setAuthenticated(response.ok));
+    }, 0);
+    return () => window.clearTimeout(timer);
   }, []);
 
   const login = async (event: FormEvent) => {

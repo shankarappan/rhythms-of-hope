@@ -64,6 +64,7 @@ jobs:
             COMPLIMENTARY_CODE_HASH
             RESEND_API_KEY
             STATUS_PASSWORD
+            ORDERS_PASSWORD
             SESSION_SIGNING_SECRET
         env:
           STRIPE_SECRET_KEY: ${{ secrets.STRIPE_SECRET_KEY }}
@@ -72,4 +73,5 @@ jobs:
           COMPLIMENTARY_CODE_HASH: ${{ secrets.COMPLIMENTARY_CODE_HASH }}
           RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
           STATUS_PASSWORD: ${{ secrets.STATUS_PASSWORD }}
+          ORDERS_PASSWORD: ${{ secrets.ORDERS_PASSWORD }}
           SESSION_SIGNING_SECRET: ${{ secrets.SESSION_SIGNING_SECRET }}
