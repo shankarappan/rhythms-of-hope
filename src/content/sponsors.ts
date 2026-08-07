@@ -33,6 +33,12 @@ export const sponsors: Sponsor[] = [
     tone: 'light',
   },
   {
+    name: 'GoSafe Transport',
+    tier: 'bronze',
+    image: '/sponsor-gosafe-transport.png',
+    tone: 'light',
+  },
+  {
     name: 'Pappadomz',
     tier: 'catering',
     image: '/sponsor-pappadomz.png',

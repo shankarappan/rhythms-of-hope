@@ -218,7 +218,7 @@ h1, h2, h3, p { margin-top: 0; }
 .sponsor-logo--featured { min-height: 118px; padding: 20px 28px; }
 .sponsor-logo--featured img { height: 76px; }
 .ticket-sponsors__supporting { margin-top: 18px; display: grid; gap: 18px; }
-.sponsor-tier__grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+.sponsor-tier__grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
 .sponsor-tier__grid .sponsor-logo, .sponsor-tier--partner .sponsor-logo { min-height: 122px; }
 .sponsor-tier__grid .sponsor-logo img { height: 78px; }
 .ticket-sponsors__partners { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
@@ -445,7 +445,6 @@ h1, h2, h3, p { margin-top: 0; }
   .ticket-sponsors__heading { margin-bottom: 20px; }
   .ticket-sponsors__supporting { gap: 18px; }
   .sponsor-tier__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .sponsor-tier__grid .sponsor-logo:last-child { grid-column: 1 / -1; }
   .ticket-sponsors__partners { grid-template-columns: 1fr; gap: 18px; }
   .sponsor-logo--featured { min-height: 100px; padding: 16px 20px; }
   .sponsor-logo--featured img { height: 62px; }
