@@ -3,6 +3,7 @@ import QRCode from "qrcode";
 import cjfsLogoDataUrl from "./assets/cjfs-logo.png?inline";
 import hopeTitleDataUrl from "./assets/hope-title.png?inline";
 import {
+  admissionLabel,
   EVENT_ADDRESS,
   EVENT_DATE,
   EVENT_NAME,
@@ -58,7 +59,7 @@ export async function createTicketPdf(order: TicketOrder, origin: string) {
     page.drawImage(hopeTitle, { x: 44, y: 648, width: 360, height: 108.3 });
     page.drawText(EVENT_NAME.toUpperCase(), { x: 44, y: 620, size: 11, font: bold, color: rgb(1, 0.42, 0.08) });
     drawMaoriSubtitle(page, regular, 594);
-    page.drawText("GENERAL ADMISSION", { x: 44, y: 548, size: 11, font: bold, color: rgb(0.75, 0.75, 0.72) });
+    page.drawText(admissionLabel(ticket.admissionType).toUpperCase(), { x: 44, y: 548, size: 11, font: bold, color: ticket.admissionType === "kids" ? rgb(0.47, 0.89, 0.3) : rgb(0.75, 0.75, 0.72) });
     page.drawText(EVENT_DATE, { x: 44, y: 516, size: 17, font: bold, color: rgb(1, 1, 1) });
     page.drawText(EVENT_TIME, { x: 44, y: 489, size: 13, font: regular, color: rgb(0.82, 0.81, 0.78) });
     page.drawText(EVENT_VENUE, { x: 44, y: 462, size: 13, font: regular, color: rgb(0.82, 0.81, 0.78) });

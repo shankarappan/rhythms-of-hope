@@ -1,13 +1,14 @@
 import { getRuntimeEnv } from "@/db";
 import {
+  ADULT_TICKET_PRICE_CENTS,
   BOOKING_FEE_CENTS,
   EVENT_ADDRESS,
   EVENT_DATE,
   EVENT_NAME,
   EVENT_TIME,
   EVENT_VENUE,
+  KIDS_TICKET_PRICE_CENTS,
   RESERVATION_SECONDS,
-  TICKET_PRICE_CENTS,
   type TicketKind,
 } from "./event-config";
 import { constantTimeEqual } from "./encoding";
@@ -72,7 +73,8 @@ export async function retrieveStripeCheckout(sessionId: string) {
 
 export async function createStripeCheckout(args: {
   origin: string;
-  quantity: number;
+  adultQuantity: number;
+  kidsQuantity: number;
   kind: TicketKind;
   reservationId: string;
 }) {
@@ -86,21 +88,25 @@ export async function createStripeCheckout(args: {
   body.set("mode", "payment");
   body.set("customer_creation", "always");
   body.set("name_collection[individual][enabled]", "true");
-  body.set("line_items[0][price_data][currency]", "nzd");
-  body.set("line_items[0][price_data][unit_amount]", String(TICKET_PRICE_CENTS));
-  body.set("line_items[0][price_data][product_data][name]", `${EVENT_NAME} — General Admission`);
-  body.set(
-    "line_items[0][price_data][product_data][description]",
-    `${EVENT_DATE} · ${EVENT_TIME} · ${EVENT_VENUE}, ${EVENT_ADDRESS}`,
-  );
-  body.set("line_items[0][quantity]", String(args.quantity));
-  body.set("line_items[1][price_data][currency]", "nzd");
-  body.set("line_items[1][price_data][unit_amount]", String(BOOKING_FEE_CENTS));
-  body.set("line_items[1][price_data][product_data][name]", "Booking and processing fee");
-  body.set("line_items[1][quantity]", String(args.quantity));
+  let lineIndex = 0;
+  const description = `${EVENT_DATE} · ${EVENT_TIME} · ${EVENT_VENUE}, ${EVENT_ADDRESS}`;
+  const addLine = (name: string, amount: number, quantity: number, lineDescription = description) => {
+    body.set(`line_items[${lineIndex}][price_data][currency]`, "nzd");
+    body.set(`line_items[${lineIndex}][price_data][unit_amount]`, String(amount));
+    body.set(`line_items[${lineIndex}][price_data][product_data][name]`, name);
+    body.set(`line_items[${lineIndex}][price_data][product_data][description]`, lineDescription);
+    body.set(`line_items[${lineIndex}][quantity]`, String(quantity));
+    lineIndex += 1;
+  };
+  if (args.adultQuantity > 0) addLine(`${EVENT_NAME} — Adult Admission (16+)`, ADULT_TICKET_PRICE_CENTS, args.adultQuantity);
+  if (args.kidsQuantity > 0) addLine(`${EVENT_NAME} — Kids Admission (15 and under)`, KIDS_TICKET_PRICE_CENTS, args.kidsQuantity);
+  const totalQuantity = args.adultQuantity + args.kidsQuantity;
+  addLine("Booking and processing fee", BOOKING_FEE_CENTS, totalQuantity, "NZ$2 per admission");
   body.set("metadata[reservation_id]", args.reservationId);
   body.set("metadata[ticket_kind]", args.kind);
-  body.set("metadata[ticket_quantity]", String(args.quantity));
+  body.set("metadata[ticket_quantity]", String(totalQuantity));
+  body.set("metadata[adult_quantity]", String(args.adultQuantity));
+  body.set("metadata[kids_quantity]", String(args.kidsQuantity));
   body.set("expires_at", String(Math.floor(Date.now() / 1000) + RESERVATION_SECONDS));
   body.set("success_url", `${args.origin}/tickets/success?session_id={CHECKOUT_SESSION_ID}`);
   body.set("cancel_url", `${args.origin}/#tickets`);

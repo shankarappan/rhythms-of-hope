@@ -7,10 +7,12 @@ type Result = {
   pending: boolean;
   order?: {
     quantity: number;
+    adultQuantity: number;
+    kidsQuantity: number;
     kind: "paid" | "complimentary";
     amountTotal: number;
     emailStatus: string;
-    tickets: { number: string }[];
+    tickets: { number: string; admissionType: "adult" | "kids" }[];
   };
 };
 
@@ -62,8 +64,13 @@ export default function TicketSuccessPage() {
               {result.order?.quantity} {result.order?.kind === "complimentary" ? "complimentary " : ""}
               {result.order?.quantity === 1 ? "ticket has" : "tickets have"} been issued.
             </p>
+            <p>
+              {result.order?.adultQuantity ? `${result.order.adultQuantity} adult` : ""}
+              {result.order?.adultQuantity && result.order?.kidsQuantity ? " · " : ""}
+              {result.order?.kidsQuantity ? `${result.order.kidsQuantity} kids (15 and under)` : ""}
+            </p>
             <div className="confirmation-numbers">
-              {result.order?.tickets.map(ticket => <strong key={ticket.number}>{ticket.number}</strong>)}
+              {result.order?.tickets.map(ticket => <strong key={ticket.number}>{ticket.number}<small>{ticket.admissionType === "kids" ? "Kids · 15 and under" : "Adult · 16+"}</small></strong>)}
             </div>
             <p>Your receipt and QR-coded PDF tickets are being sent to the email address used at checkout.</p>
           </>

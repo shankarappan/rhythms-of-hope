@@ -8,6 +8,7 @@ type CheckResult = {
     public_number?: string;
     buyer_name?: string;
     kind?: string;
+    admission_type?: "adult" | "kids";
     checked_in_at?: string | null;
   };
 };
@@ -78,7 +79,7 @@ export default function CheckInPage() {
         {result && (
           <div className={`check-result check-result--${result.status}`}>
             <strong>{result.status === "ready" ? "Valid ticket" : result.status === "valid" ? "Checked in" : result.status === "used" ? "Already used" : "Invalid ticket"}</strong>
-            {result.ticket && <p>{result.ticket.public_number}<br />{result.ticket.buyer_name}</p>}
+            {result.ticket && <p>{result.ticket.public_number}<br />{result.ticket.buyer_name}<br />{result.ticket.admission_type === "kids" ? "Kids admission · 15 and under" : "Adult admission · 16+"}</p>}
             {result.status === "ready" && <button className="button button--primary" onClick={() => void lookup(true)}>Admit guest</button>}
           </div>
         )}

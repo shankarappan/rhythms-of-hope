@@ -180,7 +180,7 @@ function App() {
             <div><dt>Date</dt><dd>{EVENT_DATE}</dd></div>
             <div><dt>Time</dt><dd>Doors {EVENT_DOORS_TIME}<span>Show starts {EVENT_SHOW_TIME}</span></dd></div>
             <div><dt>Venue</dt><dd>{EVENT_VENUE}<span>{EVENT_ADDRESS}</span></dd></div>
-            <div><dt>Tickets</dt><dd>NZ$25 total <span>NZ$23 ticket + NZ$2 fee · no GST</span></dd></div>
+            <div><dt>Tickets</dt><dd>Adults NZ$25 · Kids NZ$15 <span>Kids price applies to ages 15 and under · no GST</span></dd></div>
             <div><dt>Audience</dt><dd>Open to the wider community</dd></div>
           </dl>
         </section>

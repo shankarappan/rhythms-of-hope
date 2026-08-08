@@ -1,5 +1,7 @@
 import { getRuntimeEnv } from "@/db";
 import {
+  ADULT_TICKET_PRICE_CENTS,
+  admissionLabel,
   BOOKING_FEE_CENTS,
   EVENT_ADDRESS,
   EVENT_DATE,
@@ -7,7 +9,7 @@ import {
   EVENT_SUBTITLE,
   EVENT_TIME,
   EVENT_VENUE,
-  TICKET_PRICE_CENTS,
+  KIDS_TICKET_PRICE_CENTS,
 } from "./event-config";
 import { bytesToBase64 } from "./encoding";
 import { createTicketPdf } from "./ticket-pdf";
@@ -33,8 +35,10 @@ export async function sendTicketEmail(order: TicketOrder, origin: string) {
   const pdf = await createTicketPdf(order, origin);
   const isComplimentary = order.kind === "complimentary";
   const rows = order.tickets
-    .map(ticket => `<li style="margin:6px 0"><strong>${escapeHtml(ticket.number)}</strong></li>`)
+    .map(ticket => `<li style="margin:6px 0"><strong>${escapeHtml(ticket.number)}</strong> · ${escapeHtml(admissionLabel(ticket.admissionType))}</li>`)
     .join("");
+  const admissionValue = order.adultQuantity * ADULT_TICKET_PRICE_CENTS + order.kidsQuantity * KIDS_TICKET_PRICE_CENTS;
+  const feeValue = order.quantity * BOOKING_FEE_CENTS;
   const buyerName = escapeHtml(order.buyerName);
   const orderId = escapeHtml(order.id);
   const hopeTitleUrl = escapeHtml(new URL("/hope-title.png", origin).toString());
@@ -59,12 +63,13 @@ export async function sendTicketEmail(order: TicketOrder, origin: string) {
           <strong>${EVENT_DATE}</strong><br>${EVENT_TIME}<br>${EVENT_VENUE}<br>${EVENT_ADDRESS}
         </div>
         <p><strong>Order reference:</strong> ${orderId}</p>
-        <p><strong>Tickets:</strong> ${order.quantity}</p>
+        <p><strong>Tickets:</strong> ${order.quantity}${order.adultQuantity ? ` · Adults: ${order.adultQuantity}` : ""}${order.kidsQuantity ? ` · Kids: ${order.kidsQuantity}` : ""}</p>
         <ul style="padding-left:20px">${rows}</ul>
         <table style="width:100%;border-collapse:collapse;margin:26px 0;color:#f8f5ec">
-          <tr><td style="padding:8px 0;border-bottom:1px solid #333">General admission × ${order.quantity}</td><td style="text-align:right;border-bottom:1px solid #333">${isComplimentary ? money(0) : money(TICKET_PRICE_CENTS * order.quantity)}</td></tr>
-          <tr><td style="padding:8px 0;border-bottom:1px solid #333">Booking and processing fee × ${order.quantity}</td><td style="text-align:right;border-bottom:1px solid #333">${isComplimentary ? money(0) : money(BOOKING_FEE_CENTS * order.quantity)}</td></tr>
-          ${isComplimentary ? `<tr><td style="padding:8px 0;border-bottom:1px solid #333">Complimentary admission discount</td><td style="text-align:right;border-bottom:1px solid #333">-${money((TICKET_PRICE_CENTS + BOOKING_FEE_CENTS) * order.quantity)}</td></tr>` : ""}
+          ${order.adultQuantity ? `<tr><td style="padding:8px 0;border-bottom:1px solid #333">Adult admission (16+) × ${order.adultQuantity}</td><td style="text-align:right;border-bottom:1px solid #333">${money(ADULT_TICKET_PRICE_CENTS * order.adultQuantity)}</td></tr>` : ""}
+          ${order.kidsQuantity ? `<tr><td style="padding:8px 0;border-bottom:1px solid #333">Kids admission (15 and under) × ${order.kidsQuantity}</td><td style="text-align:right;border-bottom:1px solid #333">${money(KIDS_TICKET_PRICE_CENTS * order.kidsQuantity)}</td></tr>` : ""}
+          <tr><td style="padding:8px 0;border-bottom:1px solid #333">Booking and processing fee × ${order.quantity}</td><td style="text-align:right;border-bottom:1px solid #333">${money(feeValue)}</td></tr>
+          ${isComplimentary ? `<tr><td style="padding:8px 0;border-bottom:1px solid #333">Complimentary admission discount</td><td style="text-align:right;border-bottom:1px solid #333">-${money(admissionValue + feeValue)}</td></tr>` : ""}
           <tr><td style="padding:12px 0;font-weight:bold">Total paid</td><td style="text-align:right;font-weight:bold">${money(order.amountTotal)}</td></tr>
         </table>
         <p style="font-size:13px;color:#aaa">No GST has been charged. Please bring the attached ticket on your phone or printed. Each QR code admits one person and can be used once.</p>

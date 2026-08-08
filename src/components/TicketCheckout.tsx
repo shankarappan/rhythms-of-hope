@@ -2,13 +2,15 @@
 
 import { FormEvent, useEffect, useState } from "react";
 import {
+  ADULT_TICKET_PRICE_CENTS,
   BOOKING_FEE_CENTS,
   EVENT_ADDRESS,
   EVENT_DATE,
   EVENT_DOORS_TIME,
   EVENT_SHOW_TIME,
   EVENT_VENUE,
-  TICKET_PRICE_CENTS,
+  KIDS_TICKET_PRICE_CENTS,
+  MAX_PER_ORDER,
 } from "../../lib/event-config";
 import { SectionHeading } from "./SectionHeading";
 import { SponsorShowcase } from "./SponsorShowcase";
@@ -19,14 +21,17 @@ type Availability = {
 };
 
 export function TicketCheckout() {
-  const [quantity, setQuantity] = useState(1);
+  const [adultQuantity, setAdultQuantity] = useState(1);
+  const [kidsQuantity, setKidsQuantity] = useState(0);
   const [coupon, setCoupon] = useState("");
   const [availability, setAvailability] = useState<Availability | null>(null);
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState("");
-  const subtotal = quantity * TICKET_PRICE_CENTS;
-  const fee = quantity * BOOKING_FEE_CENTS;
-  const total = subtotal + fee;
+  const totalTickets = adultQuantity + kidsQuantity;
+  const adultSubtotal = adultQuantity * ADULT_TICKET_PRICE_CENTS;
+  const kidsSubtotal = kidsQuantity * KIDS_TICKET_PRICE_CENTS;
+  const fee = totalTickets * BOOKING_FEE_CENTS;
+  const total = adultSubtotal + kidsSubtotal + fee;
 
   useEffect(() => {
     fetch("/api/tickets/availability", { cache: "no-store" })
@@ -43,7 +48,7 @@ export function TicketCheckout() {
       const response = await fetch("/api/tickets/checkout", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ quantity, coupon }),
+        body: JSON.stringify({ adultQuantity, kidsQuantity, coupon }),
       });
       const result = (await response.json()) as { checkoutUrl?: string; error?: string };
       if (!response.ok || !result.checkoutUrl) throw new Error(result.error ?? "Checkout could not be started.");
@@ -61,23 +66,34 @@ export function TicketCheckout() {
     <section className="tickets section" id="tickets">
       <div className="tickets__intro" data-reveal>
         <SectionHeading
-          eyebrow="General admission"
+          eyebrow="Admission options"
           title="Join us for an evening of hope."
-          body="Book without creating an account. Your name and email are collected securely at Stripe Checkout, then your numbered QR tickets and receipt are sent by Moksha Base."
+          body="Choose Adult tickets or Kids tickets for guests aged 15 and under. Your details are collected securely at Stripe Checkout, then your numbered QR tickets and receipt are sent by Moksha Base."
         />
       </div>
       <form className="ticket-checkout" onSubmit={submit} data-reveal>
         <div className="ticket-checkout__heading">
-          <div><span>General admission</span><strong>NZ$25</strong><small>NZ$23 ticket + NZ$2 booking/processing fee</small></div>
+          <div><span>Adult · 16+</span><strong>NZ$25</strong><small>NZ$23 ticket + NZ$2 processing fee</small></div>
+          <div><span>Kids · 15 and under</span><strong>NZ$15</strong><small>NZ$13 ticket + NZ$2 processing fee</small></div>
         </div>
-        <label className="ticket-field">
-          <span>Number of tickets</span>
-          <select value={quantity} onChange={event => setQuantity(Number(event.target.value))}>
-            {Array.from({ length: 10 }, (_, index) => index + 1).map(value => (
+        <div className="ticket-quantity-grid">
+          <label className="ticket-field">
+            <span>Adult tickets <small>16+</small></span>
+            <select value={adultQuantity} onChange={event => setAdultQuantity(Number(event.target.value))}>
+              {Array.from({ length: MAX_PER_ORDER - kidsQuantity + 1 }, (_, index) => index).map(value => (
+                <option key={value} value={value}>{value}</option>
+              ))}
+            </select>
+          </label>
+          <label className="ticket-field">
+            <span>Kids tickets <small>15 years or younger</small></span>
+            <select value={kidsQuantity} onChange={event => setKidsQuantity(Number(event.target.value))}>
+              {Array.from({ length: MAX_PER_ORDER - adultQuantity + 1 }, (_, index) => index).map(value => (
               <option key={value} value={value}>{value}</option>
-            ))}
-          </select>
-        </label>
+              ))}
+            </select>
+          </label>
+        </div>
         <label className="ticket-field">
           <span>Complimentary code <small>optional</small></span>
           <input
@@ -90,8 +106,9 @@ export function TicketCheckout() {
         </label>
         {coupon && <p className="ticket-code-note">Your code will be validated securely when you continue.</p>}
         <div className="ticket-summary">
-          <div><span>Tickets × {quantity}</span><strong>NZ${(subtotal / 100).toFixed(2)}</strong></div>
-          <div><span>Booking/processing fee × {quantity}</span><strong>NZ${(fee / 100).toFixed(2)}</strong></div>
+          {adultQuantity > 0 && <div><span>Adult admission × {adultQuantity}</span><strong>NZ${(adultSubtotal / 100).toFixed(2)}</strong></div>}
+          {kidsQuantity > 0 && <div><span>Kids admission × {kidsQuantity}</span><strong>NZ${(kidsSubtotal / 100).toFixed(2)}</strong></div>}
+          <div><span>Processing fee × {totalTickets}</span><strong>NZ${(fee / 100).toFixed(2)}</strong></div>
           <div className="ticket-summary__total"><span>Total before any valid discount</span><strong>NZ${(total / 100).toFixed(2)}</strong></div>
           <small>No GST charged</small>
         </div>
@@ -99,12 +116,12 @@ export function TicketCheckout() {
         <button
           className="button button--ticket"
           type="submit"
-          disabled={submitting || !salesOpen || soldOut}
+          disabled={submitting || !salesOpen || soldOut || totalTickets < 1 || totalTickets > MAX_PER_ORDER}
         >
           {soldOut ? "Sold out" : !salesOpen ? "Tickets opening soon" : submitting ? "Opening checkout…" : "Continue to secure checkout"}
           <span aria-hidden="true">↗</span>
         </button>
-        <p className="ticket-checkout__note">Maximum 10 tickets per order. Your reservation is held for 30 minutes while you complete checkout.</p>
+        <p className="ticket-checkout__note">Maximum 10 tickets total per order. Kids tickets are for guests aged 15 or younger. Your reservation is held for 30 minutes while you complete checkout.</p>
       </form>
       <SponsorShowcase />
       <div className="ticket-event-line" data-reveal>

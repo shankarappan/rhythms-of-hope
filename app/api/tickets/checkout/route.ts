@@ -24,15 +24,21 @@ export async function POST(request: Request) {
   if (getRuntimeEnv().TICKETING_ENABLED !== "true") {
     return Response.json({ error: "Ticket sales are not open yet." }, { status: 503 });
   }
-  let payload: { quantity?: number; coupon?: string };
+  let payload: { adultQuantity?: number; kidsQuantity?: number; quantity?: number; coupon?: string };
   try {
     payload = (await request.json()) as typeof payload;
   } catch {
     return Response.json({ error: "Invalid checkout request." }, { status: 400 });
   }
-  const quantity = Number(payload.quantity);
-  if (!Number.isInteger(quantity) || quantity < 1 || quantity > MAX_PER_ORDER) {
-    return Response.json({ error: `Choose between 1 and ${MAX_PER_ORDER} tickets.` }, { status: 400 });
+  const adultQuantity = Number(payload.adultQuantity ?? payload.quantity ?? 0);
+  const kidsQuantity = Number(payload.kidsQuantity ?? 0);
+  const quantity = adultQuantity + kidsQuantity;
+  if (
+    !Number.isInteger(adultQuantity) || adultQuantity < 0 ||
+    !Number.isInteger(kidsQuantity) || kidsQuantity < 0 ||
+    quantity < 1 || quantity > MAX_PER_ORDER
+  ) {
+    return Response.json({ error: `Choose between 1 and ${MAX_PER_ORDER} tickets in total.` }, { status: 400 });
   }
   const coupon = payload.coupon?.trim().toUpperCase() ?? "";
   const complimentary = coupon ? await isComplimentaryCode(coupon) : false;
@@ -40,14 +46,15 @@ export async function POST(request: Request) {
     return Response.json({ error: "That complimentary code is not valid." }, { status: 400 });
   }
   const kind: TicketKind = complimentary ? "complimentary" : "paid";
-  const reservation = await createReservation(kind, quantity).catch(error => {
+  const reservation = await createReservation(kind, adultQuantity, kidsQuantity).catch(error => {
     throw new Error(error instanceof Error ? error.message : "Tickets could not be reserved.");
   });
   try {
     const origin = new URL(request.url).origin;
     const session = await createStripeCheckout({
       origin,
-      quantity,
+      adultQuantity,
+      kidsQuantity,
       kind,
       reservationId: reservation.id,
     });

@@ -11,12 +11,19 @@ export const CAPACITY = 350;
 export const COMPLIMENTARY_CAPACITY = 50;
 export const PAID_CAPACITY = CAPACITY - COMPLIMENTARY_CAPACITY;
 export const MAX_PER_ORDER = 10;
-export const TICKET_PRICE_CENTS = 2300;
+export const ADULT_TICKET_PRICE_CENTS = 2300;
+export const KIDS_TICKET_PRICE_CENTS = 1300;
+export const TICKET_PRICE_CENTS = ADULT_TICKET_PRICE_CENTS;
 export const BOOKING_FEE_CENTS = 200;
 export const RESERVATION_SECONDS = 31 * 60;
 export const MOKSHA_DONATION_PAYMENT_LINK_ID = "plink_1Tv3ubFNUoRQzHYGYHan2Dht";
 
 export type TicketKind = "paid" | "complimentary";
+export type AdmissionType = "adult" | "kids";
+
+export function admissionLabel(type: AdmissionType) {
+  return type === "kids" ? "Kids admission (15 years or younger)" : "Adult admission (16+)";
+}
 
 export function ticketNumber(id: number) {
   return `ROH-${String(id).padStart(6, "0")}`;

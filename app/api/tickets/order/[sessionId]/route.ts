@@ -14,10 +14,12 @@ export async function GET(
     pending: false,
     order: {
       quantity: order.quantity,
+      adultQuantity: order.adultQuantity,
+      kidsQuantity: order.kidsQuantity,
       kind: order.kind,
       amountTotal: order.amountTotal,
       emailStatus: order.emailStatus,
-      tickets: order.tickets.map(ticket => ({ number: ticket.number })),
+      tickets: order.tickets.map(ticket => ({ number: ticket.number, admissionType: ticket.admissionType })),
     },
   });
 }
